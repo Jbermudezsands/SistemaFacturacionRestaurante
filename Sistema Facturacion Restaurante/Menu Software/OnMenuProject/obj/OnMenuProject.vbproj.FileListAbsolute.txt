@@ -1,0 +1,172 @@
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.exe
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.xml
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.pdb
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.exe
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.pdb
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.xml
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Input.2.dll
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.dll
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Input.2.xml
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.xml
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Form1.resources
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Resources.resources
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.vbproj.GenerateResource.Cache
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.exe.licenses
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Form2.resources
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Command.2.dll
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Command.2.xml
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Autentificacion.resources
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FrmTeclado.resources
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FrmTecladoNumerico.resources
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1List.2.dll
+C:\Users\Juerguen\Documents\Visual Studio 2005\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1List.2.xml
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.exe
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.xml
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.pdb
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.exe
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.pdb
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.xml
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Command.2.dll
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Input.2.dll
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1List.2.dll
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.dll
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1List.2.xml
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Command.2.xml
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Input.2.xml
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.xml
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Autentificacion.resources
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Form1.resources
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Form2.resources
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FrmTeclado.resources
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FrmTecladoNumerico.resources
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Resources.resources
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.vbproj.GenerateResource.Cache
+C:\Users\Soporte\Documents\Projects\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.exe.licenses
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.exe
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.pdb
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.exe
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.pdb
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\OnMenuProject.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Command.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Input.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1List.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1List.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Command.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1Input.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Autentificacion.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Form1.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Form2.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FrmTeclado.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FrmTecladoNumerico.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Resources.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.vbproj.GenerateResource.Cache
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.exe.licenses
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.Form3.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FrmViewer.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.ArepFacturasTiras2.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.frmConsulta.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FormLog.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.FormCuentas.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Debug\OnMenuProject.ArepComanda.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\OnMenuProject.exe
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\OnMenuProject.pdb
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\OnMenuProject.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1Command.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1Input.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1List.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1TrueDBGrid.2.dll
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1List.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1Command.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1Input.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\bin\Release\C1.Win.C1TrueDBGrid.2.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.Autentificacion.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.Form1.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.Form2.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.Form3.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.FormCuentas.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.FormLog.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.frmConsulta.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.FrmTeclado.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.FrmTecladoNumerico.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.FrmViewer.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.Resources.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.ArepComanda.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.ArepFacturasTiras2.resources
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.vbproj.GenerateResource.Cache
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.exe.licenses
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.exe
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.xml
+C:\Users\Papu\Documents\OnMenuProject\OnMenuProject\obj\Release\OnMenuProject.pdb
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.exe
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.xml
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.pdb
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\OnMenuProject.exe
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\OnMenuProject.pdb
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\OnMenuProject.xml
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Command.2.dll
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Input.2.dll
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1List.2.dll
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.dll
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1List.2.xml
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Command.2.xml
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Input.2.xml
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.xml
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\ResolveAssemblyReference.cache
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Autentificacion.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Form1.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Form2.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Form3.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FormCuentas.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FormLog.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.frmConsulta.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FrmTeclado.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FrmTecladoNumerico.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FrmViewer.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Resources.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.ArepComanda.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.ArepFacturasTiras2.resources
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.vbproj.GenerateResource.Cache
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.exe.licenses
+D:\Sistemas\Menu Software\OnMenuProject\bin\Debug\Interop.MSDASC.dll
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\Interop.MSDASC.dll
+D:\Sistemas\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.vbproj.ResolveComReference.cache
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.exe
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.xml
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.pdb
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\OnMenuProject.exe
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\OnMenuProject.pdb
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\OnMenuProject.xml
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Command.2.dll
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Input.2.dll
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1List.2.dll
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.dll
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1List.2.xml
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Command.2.xml
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1Input.2.xml
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\C1.Win.C1TrueDBGrid.2.xml
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\bin\Debug\Interop.MSDASC.dll
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\ResolveAssemblyReference.cache
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\Interop.MSDASC.dll
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.vbproj.ResolveComReference.cache
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Autentificacion.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Form1.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Form2.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Form3.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FormCuentas.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FormLog.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.frmConsulta.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FrmTeclado.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FrmTecladoNumerico.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FrmViewer.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.Resources.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.ArepComanda.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.ArepFacturasTiras2.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.vbproj.GenerateResource.Cache
+D:\Sistemas\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.exe.licenses

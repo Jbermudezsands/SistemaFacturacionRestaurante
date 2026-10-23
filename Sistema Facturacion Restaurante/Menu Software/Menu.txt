@@ -1,0 +1,7 @@
+Mesas: Clientes con limites de crédito en 0.
+
+Meseros: Vendedores.
+
+Form1: formulario principal, actualmente graba las facturas directamente, no como cotización, lo cual sería genial.
+
+rep_supadm
