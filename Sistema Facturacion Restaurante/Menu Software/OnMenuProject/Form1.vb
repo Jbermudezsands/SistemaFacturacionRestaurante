@@ -689,46 +689,12 @@ Public Class Form1
                 End If
 
 
-                '//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                '///////////////////////////////////SELECCIONO LA IMPRESORA CONFIGURADA PARA LAS FACTURAS /////////////
-                '///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                Dim pd As New PrintDocument
-                Dim ImpresoraFactura As String
-                Dim s_Default_Printer As String = pd.PrinterSettings.PrinterName
-
-                Impresora_Defecto = s_Default_Printer
-                ImpresoraFactura = BuscaImpresora("Comanda")
-                Establecer_Impresora(ImpresoraFactura)
-
-
-                '////// GENERO IMPRESION COMANDA  //////////
-                Dim ArepComanda As New ArepComanda
-                ArepComanda.LblFecha.Text = Format(DateTime.Now, "dd/MM/yyyy")
-                ArepComanda.LblMesa.Text = Me.cboMesas.Text
-                ArepComanda.lblfactura.Text = NumeroFactura
-                ArepComanda.LblMesero.Text = NombreVendedor
-
-                Dim ViewerForm As New FrmViewer()
-                ViewerForm.arvMain.Document = ArepComanda.Document
-                My.Application.DoEvents()
-
-
-                ArepComanda.DataSource = TablaReporte
-                'ArepComanda.Run(False)
-                'ViewerForm.Show()
-
-                '//////////////////////////////////////////////////////////////
-                '////////////////IMPRIMO SEGUN CLASIFICACION /////////////////
-                '//////////////////////////////////////////////////////////////
-
-                If ImprimeFacturaPreview = True Then
-                    ArepComanda.Run(True)
-                    ViewerForm.Show()
-
-                Else
-                    ArepComanda.Run(True)
-                    ViewerForm.arvMain.Document.Print(False, False, False)
-                End If
+                '//////////////////////////////////////////////////////////////////////////////////////////
+                '///// SEPARO LA COMANDA POR TIPO DE IMPRESION: Comanda = cocina, ComandaBar = bar /////
+                '//////////////////////////////////////////////////////////////////////////////////////////
+                AgregaTipoImpresion(TablaReporte)
+                ImprimirComandaPorTipo(TablaReporte, "Comanda", ImprimeFacturaPreview)
+                ImprimirComandaPorTipo(TablaReporte, "ComandaBar", ImprimeFacturaPreview)
 
                 '/////////////////////////////////////////////////////////
                 '/////////////////////////////////////////////////////////
@@ -744,6 +710,85 @@ Public Class Form1
             End If
         End If
 
+    End Sub
+
+
+    '// Agrega a la tabla de la comanda el TipoImpresion de cada producto (Comanda = cocina, ComandaBar = bar)
+    Private Sub AgregaTipoImpresion(ByVal Tabla As DataTable)
+        If Not Tabla.Columns.Contains("TipoImpresion") Then Tabla.Columns.Add("TipoImpresion", GetType(String))
+        If Tabla.Rows.Count = 0 Then Exit Sub
+
+        Dim Tipos As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
+        Try
+            If TempConn.State <> ConnectionState.Closed Then TempConn.Close()
+            TempConn.Open()
+            Using Cmd As New SqlCommand("SELECT TipoImpresion FROM Productos WHERE Cod_Productos = @Cod", TempConn)
+                Cmd.Parameters.Add("@Cod", SqlDbType.VarChar, 50)
+                For Each Fila As DataRow In Tabla.Rows
+                    Dim Codigo As String = Convert.ToString(Fila("Codigo"))
+                    If Not Tipos.ContainsKey(Codigo) Then
+                        Cmd.Parameters("@Cod").Value = Codigo
+                        Dim Valor As Object = Cmd.ExecuteScalar()
+                        Dim Tipo As String = "Comanda"
+                        If Valor IsNot Nothing AndAlso Not IsDBNull(Valor) AndAlso Convert.ToString(Valor).Trim() <> "" Then
+                            Tipo = Convert.ToString(Valor).Trim()
+                        End If
+                        Tipos(Codigo) = Tipo
+                    End If
+                    Fila("TipoImpresion") = Tipos(Codigo)
+                Next
+            End Using
+        Catch ex As Exception
+            ' Si no se puede consultar (p. ej. la BD no tiene el campo TipoImpresion) todo va a cocina
+        Finally
+            If TempConn.State <> ConnectionState.Closed Then TempConn.Close()
+        End Try
+
+        For Each Fila As DataRow In Tabla.Rows
+            If IsDBNull(Fila("TipoImpresion")) Then Fila("TipoImpresion") = "Comanda"
+        Next
+    End Sub
+
+    '// Imprime la comanda de un tipo: "ComandaBar" va a la impresora del bar, todo lo demas a la de cocina
+    Private Sub ImprimirComandaPorTipo(ByVal Tabla As DataTable, ByVal Tipo As String, ByVal ImprimeFacturaPreview As Boolean)
+        Dim Vista As New DataView(Tabla)
+        If Tipo = "ComandaBar" Then
+            Vista.RowFilter = "TipoImpresion = 'ComandaBar'"
+        Else
+            Vista.RowFilter = "TipoImpresion <> 'ComandaBar'"
+        End If
+        If Vista.Count = 0 Then Exit Sub
+        Dim TablaTipo As DataTable = Vista.ToTable()
+
+        '///////// SELECCIONO LA IMPRESORA CONFIGURADA PARA EL TIPO /////////
+        Dim Impresora As String = BuscaImpresora(Tipo)
+        If Tipo = "ComandaBar" AndAlso (String.IsNullOrWhiteSpace(Impresora) OrElse Impresora.Trim().Equals("Ninguno", StringComparison.OrdinalIgnoreCase)) Then
+            ' El bar no tiene impresora configurada: se envia a la de cocina para no perder la comanda
+            Impresora = BuscaImpresora("Comanda")
+        End If
+        Establecer_Impresora(Impresora)
+
+        '////// GENERO IMPRESION COMANDA  //////////
+        Dim ArepComanda As New ArepComanda
+        ArepComanda.LblFecha.Text = Format(DateTime.Now, "dd/MM/yyyy")
+        ArepComanda.LblMesa.Text = Me.cboMesas.Text
+        ArepComanda.lblfactura.Text = NumeroFactura
+        ArepComanda.LblMesero.Text = NombreVendedor
+        If Tipo = "ComandaBar" Then ArepComanda.Label6.Text = "Comanda Bar"
+
+        Dim ViewerForm As New FrmViewer()
+        ViewerForm.arvMain.Document = ArepComanda.Document
+        My.Application.DoEvents()
+
+        ArepComanda.DataSource = TablaTipo
+
+        If ImprimeFacturaPreview = True Then
+            ArepComanda.Run(True)
+            ViewerForm.Show()
+        Else
+            ArepComanda.Run(True)
+            ViewerForm.arvMain.Document.Print(False, False, False)
+        End If
     End Sub
 
 
