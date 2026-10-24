@@ -51,592 +51,10 @@ Public Class Form1
     End Sub
 
 
-    Public Sub MoverBotones()
-        Dim Ancho As Double = 1386, Largo As Double = 734
-        Dim PAncho As Double, PLargo As Double, btnX As Double, btnY As Double
-
-        '////////////////////////////////////////////////////////////////////////////
-        '///////////////////MUEVO LOS BOTONES /////////////////////////////////////////
-        '////////////////////////////////////////////////////////////////////////////
-
-        btnX = Me.Width - Me.C1Button1.Width - 28 '/////28 es el margen del formulario
-        btnY = Me.C1Button1.Location.Y
-        Me.C1Button1.Location = New Point(btnX, btnY)
-
-        My.Application.DoEvents()
-        btnX = Me.Width - Me.C1Button3.Width - 28 '/////28 es el margen del formulario
-        btnY = Me.C1Button3.Location.Y
-        Me.C1Button3.Location = New Point(btnX, btnY)
-
-        btnX = Me.Width - Me.C1Button4.Width - 28 '/////28 es el margen del formulario
-        btnY = Me.C1Button4.Location.Y
-        Me.C1Button4.Location = New Point(btnX, btnY)
-
-        btnX = Me.Width - Me.C1Button5.Width - 28 '/////28 es el margen del formulario
-        btnY = Me.C1Button5.Location.Y
-        Me.C1Button5.Location = New Point(btnX, btnY)
-
-        btnX = Me.Width - Me.btGuardar.Width - 28 '/////28 es el margen del formulario
-        btnY = Me.btGuardar.Location.Y
-        Me.btGuardar.Location = New Point(btnX, btnY)
-
-        btnX = Me.Width - Me.BtnPago.Width - 28 '/////28 es el marbgen del formulario
-        btnY = Me.BtnPago.Location.Y
-        Me.BtnPago.Location = New Point(btnX, btnY)
-
-        btnX = Me.Width - Me.BtnPreFactura.Width - 28 '/////28 es el marbgen del formulario
-        btnY = Me.BtnPreFactura.Location.Y
-        Me.BtnPreFactura.Location = New Point(btnX, btnY)
-
-
-        btnX = Me.Width - Me.lblNombreVendedor.Width - 28 '/////28 es el margen del formulario
-        btnY = Me.lblNombreVendedor.Location.Y
-        Me.lblNombreVendedor.Location = New Point(btnX, btnY)
-
-        btnX = Me.Width - Me.ImgFoto.Width - 20 '/////28 es el margen del formulario
-        btnY = Me.ImgFoto.Location.Y
-        Me.ImgFoto.Location = New Point(btnX, btnY)
-
-        My.Application.DoEvents()
-
-
-        btnX = Me.btnAtras.Location.X + Me.btnAtras.Width + 6
-        btnY = Me.C1DockingTab1.Location.Y
-        Me.C1DockingTab1.Location = New Point(btnX, btnY)
-
-        btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6 '/////28 es el margen del formulario
-        btnY = Me.btnAgregar.Location.Y
-        Me.btnAgregar.Location = New Point(btnX, btnY)
-
-        btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6 '/////28 es el margen del formulario
-        btnY = Me.LblMesas.Location.Y
-        Me.LblMesas.Location = New Point(btnX, btnY)
-
-        btnX = Me.btnAgregar.Location.X + Me.btnAgregar.Width + 7 '/////28 es el margen del formulario
-        btnY = Me.btnDisminuir.Location.Y
-        Me.btnDisminuir.Location = New Point(btnX, btnY)
-
-        btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-        btnY = Me.btnEliminar.Location.Y
-        Me.btnEliminar.Location = New Point(btnX, btnY)
-
-        btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-        btnY = Me.C1Button2.Location.Y
-        Me.C1Button2.Location = New Point(btnX, btnY)
-
-        btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-        btnY = Me.ckPropina.Location.Y
-        Me.ckPropina.Location = New Point(btnX, btnY)
-
-        btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-        btnY = Me.ckExonerar.Location.Y
-        Me.ckExonerar.Location = New Point(btnX, btnY)
-
-        btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-        btnY = Me.cboMesas.Location.Y
-        Me.cboMesas.Location = New Point(btnX, btnY)
-
-        btnX = Me.ckExonerar.Location.X + Me.ckExonerar.Width + 6
-        btnY = Me.LblProductos.Location.Y
-        Me.LblProductos.Location = New Point(btnX, btnY)
-
-        '//////////////////TEXTO DE SUBTOTAL Y TOTALES //////////////////////
-        btnX = Me.LblSubTotal.Location.X + Me.LblSubTotal.Width + 2
-        btnY = Me.LblSubTotal.Location.Y
-        Me.txtSubTotal.Location = New Point(btnX, btnY)
-
-        btnX = Me.txtSubTotal.Location.X + Me.txtSubTotal.Width + 2
-        btnY = Me.txtSubTotal.Location.Y
-        Me.LblIva.Location = New Point(btnX, btnY)
-
-        btnX = Me.LblIva.Location.X + Me.LblIva.Width + 2
-        btnY = Me.LblIva.Location.Y
-        Me.txtIva.Location = New Point(btnX, btnY)
-
-        btnX = Me.txtIva.Location.X + Me.txtIva.Width + 2
-        btnY = Me.txtIva.Location.Y
-        Me.LblPropina.Location = New Point(btnX, btnY)
-
-        btnX = Me.LblPropina.Location.X + Me.LblPropina.Width + 2
-        btnY = Me.LblPropina.Location.Y
-        Me.txtpropina.Location = New Point(btnX, btnY)
-
-        btnX = Me.txtpropina.Location.X + Me.txtpropina.Width + 2
-        btnY = Me.txtpropina.Location.Y
-        Me.LblTotal.Location = New Point(btnX, btnY)
-
-        btnX = Me.LblTotal.Location.X + Me.LblTotal.Width + 2
-        btnY = Me.LblTotal.Location.Y
-        Me.txtTotal.Location = New Point(btnX, btnY)
-
-
-
-    End Sub
-
-    Public Sub Responsivo()
-        Dim Ancho As Double = 1386, Largo As Double = 734
-        Dim PAncho As Double, PLargo As Double, btnX As Double, btnY As Double
-
-        Me.Text = Me.Width
-        '//////////////// Cajero ///////////////////////
-        'If Ancho > Me.Width Then
-        '    PAncho = 1 - ((Me.Width - 50) / Ancho)
-        'Else
-        '    PAncho = 1 - (Ancho / (Me.Width - 50))
-        'End If
-
-        'If Largo > Me.Height Then
-        '    PLargo = 1 - ((Me.Height - 100) / Largo)
-        'Else
-        '    PLargo = 1 - (Largo / (Me.Height - 100))
-        'End If
-
-        '///////////////  AGREGO EL NUEVO flowPanel2 //////////////
-        'FlowPProductos = New FlowLayoutPanel
-        'FlowPProductos.Location = New Point(685, 32)
-        'FlowPProductos.Height = 605
-        'FlowPProductos.Width = 445
-        'FlowPProductos.BackColor = Color.White
-        'FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-        'FlowPProductos.AutoScroll = True
-        'Me.Controls.Add(FlowPProductos)
-
-
-        PAncho = Ancho - Me.Width
-        PLargo = Largo - Me.Height
-
-        btnX = Me.btnEliminar.Location.X + Me.btnEliminar.Width + 8
-        PAncho = C1Button1.Location.X - btnX   'Ancho - Me.Width
-        PLargo = Largo - Me.Height
-        My.Application.DoEvents()
-
-        FlowPProductos.Location = New Point(btnX, 32)
-        FlowPProductos.Height = 651 - PLargo
-        FlowPProductos.Width = PAncho - 6
-        FlowPProductos.BackColor = Color.White
-        FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-        FlowPProductos.AutoScroll = True
-        Me.FlowLayoutPanel1.Size = New Size(btnX - 10, 280)
-
-        Me.LblProductos.Visible = False
-        Me.C1Button1.Location = New Point(1239, 125)
-        Me.C1Button5.Location = New Point(1239, 192)
-        Me.btGuardar.Location = New Point(1239, 269)
-        Me.C1Button3.Location = New Point(1239, 341)
-        Me.BtnPago.Location = New Point(1239, 414)
-        Me.BtnPreFactura.Location = New Point(1239, 487)
-        Me.C1Button4.Location = New Point(1239, 560)
-        Me.lblNombreVendedor.Visible = True
-
-
-
-        If Me.Width < 1300 Then
-
-            Me.C1Button1.Size = New Size(93 * (1 - (PAncho / Ancho)), 64)
-            Me.C1Button4.Size = New Size(93 * (1 - (PAncho / Ancho)), 64)
-            Me.C1Button3.Size = New Size(93 * (1 - (PAncho / Ancho)), 64)
-            Me.C1Button5.Size = New Size(93 * (1 - (PAncho / Ancho)), 64)
-            Me.btGuardar.Size = New Size(93 * (1 - (PAncho / Ancho)), 64)
-            Me.BtnPago.Size = New Size(93 * (1 - (PAncho / Ancho)), 64)
-            Me.BtnPreFactura.Size = New Size(93 * (1 - (PAncho / Ancho)), 64)
-
-            Me.lblNombreVendedor.Size = New Size(90 * (1 - (PAncho / Ancho)), 27)
-            Me.ImgFoto.Size = New Size(103 * (1 - (PAncho / Ancho)), 107)
-
-
-            'btnX = Me.Width - Me.C1Button1.Width - 28 '/////28 es el margen del formulario
-            'btnY = Me.C1Button1.Location.Y
-            'Me.C1Button1.Location = New Point(btnX, btnY)
-
-            'My.Application.DoEvents()
-            'btnX = Me.Width - Me.C1Button3.Width - 28 '/////28 es el margen del formulario
-            'btnY = Me.C1Button3.Location.Y
-            'Me.C1Button3.Location = New Point(btnX, btnY)
-
-            'btnX = Me.Width - Me.C1Button4.Width - 28 '/////28 es el margen del formulario
-            'btnY = Me.C1Button4.Location.Y
-            'Me.C1Button4.Location = New Point(btnX, btnY)
-
-            'btnX = Me.Width - Me.C1Button5.Width - 28 '/////28 es el margen del formulario
-            'btnY = Me.C1Button5.Location.Y
-            'Me.C1Button5.Location = New Point(btnX, btnY)
-
-            'btnX = Me.Width - Me.btGuardar.Width - 28 '/////28 es el margen del formulario
-            'btnY = Me.btGuardar.Location.Y
-            'Me.btGuardar.Location = New Point(btnX, btnY)
-
-            'btnX = Me.Width - Me.lblNombreVendedor.Width - 28 '/////28 es el margen del formulario
-            'btnY = Me.lblNombreVendedor.Location.Y
-            'Me.lblNombreVendedor.Location = New Point(btnX, btnY)
-
-            'btnX = Me.Width - Me.ImgFoto.Width - 28 '/////28 es el margen del formulario
-            'btnY = Me.ImgFoto.Location.Y
-            'Me.ImgFoto.Location = New Point(btnX, btnY)
-
-            MoverBotones()
-
-            btnX = Me.btnEliminar.Location.X + Me.btnEliminar.Width + 8
-            PAncho = C1Button1.Location.X - btnX   'Ancho - Me.Width
-            PLargo = Largo - Me.Height
-            My.Application.DoEvents()
-
-            FlowPProductos.Location = New Point(btnX, 32)
-            FlowPProductos.Height = PLargo - 6
-            FlowPProductos.Width = PAncho - 6
-            FlowPProductos.BackColor = Color.White
-            FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-            FlowPProductos.AutoScroll = True
-            Me.FlowLayoutPanel1.Size = New Size(btnX - 10, Me.Height - FlowLayoutPanel1.Location.Y - 45)
-
-
-
-            If Me.Width <= 1000 Then
-
-                PAncho = Ancho - Me.Width
-                PLargo = Largo - Me.Height
-
-                Me.cboMesas.Size = New Size(133 * (1 - (PAncho / Ancho)), 36)
-                Me.btnAgregar.Size = New Size(63 * (1 - (PAncho / Ancho)), 59)
-                Me.btnDisminuir.Size = New Size(63 * (1 - (PAncho / Ancho)), 59)
-                Me.btnAtras.Size = New Size(60 * (1 - (PAncho / Ancho)), 98)
-                Me.btnSiguiente.Size = New Size(60 * (1 - (PAncho / Ancho)), 98)
-                Me.btnEliminar.Size = New Size(132 * (1 - (PAncho / Ancho)), 58)
-                Me.C1Button2.Size = New Size(132 * (1 - (PAncho / Ancho)), 58)
-                Me.ckPropina.Size = New Size(116 * (1 - (PAncho / Ancho)), 33)
-                Me.ckExonerar.Size = New Size(116 * (1 - (PAncho / Ancho)), 33)
-                Me.txtSubTotal.Size = New Size(99 * (1 - (PAncho / Ancho)), 32)
-                Me.txtIva.Size = New Size(99 * (1 - (PAncho / Ancho)), 32)
-                Me.txtpropina.Size = New Size(84 * (1 - (PAncho / Ancho)), 32)
-                Me.txtTotal.Size = New Size(109 * (1 - (PAncho / Ancho)), 32)
-                My.Application.DoEvents()
-
-                '/////////////////////////////////////////////CAMBIO TAMAÑO DE LAS LETRAS ////////////////////////////////////
-                ckPropina.Font = New Font(ckPropina.Font.Name, 10, ckPropina.Font.Style)
-                ckExonerar.Font = New Font(ckExonerar.Font.Name, 10, ckPropina.Font.Style)
-                Me.cboMesas.Font = New Font(cboMesas.Font.Name, 10, cboMesas.Font.Style)
-                LblSubTotal.Font = New Font(LblSubTotal.Font.Name, 10, LblSubTotal.Font.Style)
-                LblIva.Font = New Font(LblIva.Font.Name, 10, LblIva.Font.Style)
-                LblPropina.Font = New Font(LblPropina.Font.Name, 10, LblPropina.Font.Style)
-                LblTotal.Font = New Font(LblTotal.Font.Name, 10, LblTotal.Font.Style)
-                txtSubTotal.Font = New Font(txtSubTotal.Font.Name, 10, txtSubTotal.Font.Style)
-                txtIva.Font = New Font(txtIva.Font.Name, 10, txtIva.Font.Style)
-                txtpropina.Font = New Font(txtpropina.Font.Name, 10, txtpropina.Font.Style)
-                txtTotal.Font = New Font(txtTotal.Font.Name, 10, txtTotal.Font.Style)
-                lblNombreVendedor.Font = New Font(lblNombreVendedor.Font.Name, 10, lblNombreVendedor.Font.Style)
-
-                MoverBotones()
-
-                Me.C1Button1.Text = ""
-                Me.C1Button3.Text = ""
-                Me.C1Button4.Text = ""
-                Me.C1Button5.Text = ""
-                Me.btGuardar.Text = ""
-
-                Me.C1Button2.Text = "Precio"
-                Me.btnEliminar.Text = "Elimina"
-                Me.btnEliminar.TextAlign = ContentAlignment.MiddleRight
-
-
-
-
-
-                If Me.Width <= 850 Then
-
-                    Me.C1Button1.Size = New Size(93, 64)
-                    Me.C1Button4.Size = New Size(93, 64)
-                    Me.C1Button3.Size = New Size(93, 64)
-                    Me.C1Button5.Size = New Size(93, 64)
-                    Me.btGuardar.Size = New Size(93, 64)
-                    Me.BtnPago.Size = New Size(93, 64)
-                    Me.BtnPreFactura.Size = New Size(93, 64)
-
-
-                    Me.lblNombreVendedor.Size = New Size(90, 27)
-                    Me.ImgFoto.Size = New Size(103, 107)
-
-                    btnX = Me.btnEliminar.Location.X + Me.btnEliminar.Width + 8
-                    PAncho = C1Button1.Location.X - btnX   'Ancho - Me.Width
-                    PLargo = Largo - Me.Height
-                    My.Application.DoEvents()
-                    Me.FlowLayoutPanel1.Size = New Size(btnX - 10, 270)
-
-                    If Me.Width <= 800 Then
-
-                        Me.LblProductos.Visible = False
-                        FlowPProductos.Location = New Point(Me.FlowLayoutPanel1.Location.X, Me.FlowLayoutPanel1.Location.Y + FlowLayoutPanel1.Height + 10)
-                        FlowPProductos.Height = 180
-                        FlowPProductos.Width = Me.FlowLayoutPanel1.Width
-                        FlowPProductos.BackColor = Color.White
-                        FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-                        FlowPProductos.AutoScroll = True
-
-                        Me.C1Button1.Location = New Point(FlowPProductos.Location.X, FlowPProductos.Location.Y + FlowPProductos.Height + 10)
-                        Me.C1Button5.Location = New Point(Me.C1Button1.Location.X + Me.C1Button1.Width + 5, FlowPProductos.Location.Y + FlowPProductos.Height + 10)
-                        Me.btGuardar.Location = New Point(Me.C1Button5.Location.X + Me.C1Button5.Width + 5, FlowPProductos.Location.Y + FlowPProductos.Height + 10)
-                        Me.C1Button3.Location = New Point(Me.btGuardar.Location.X + Me.btGuardar.Width + 5, FlowPProductos.Location.Y + FlowPProductos.Height + 10)
-                        Me.BtnPago.Location = New Point(Me.C1Button3.Location.X + Me.C1Button3.Width + 5, FlowPProductos.Location.Y + FlowPProductos.Height + 10)
-                        Me.BtnPreFactura.Location = New Point(Me.BtnPago.Location.X + Me.BtnPago.Width + 5, FlowPProductos.Location.Y + FlowPProductos.Height + 10)
-                        Me.C1Button4.Location = New Point(Me.BtnPreFactura.Location.X + Me.BtnPreFactura.Width + 5, FlowPProductos.Location.Y + FlowPProductos.Height + 10)
-
-
-
-
-                        Me.cboMesas.Size = New Size(100, 36)
-                        Me.btnEliminar.Size = New Size(100, 55)
-                        Me.C1Button2.Size = New Size(100, 55)
-
-                        Me.btnAgregar.Size = New Size(43 * (1 - (PAncho / Ancho)), 59)
-                        Me.btnDisminuir.Size = New Size(43 * (1 - (PAncho / Ancho)), 59)
-                        Me.btnDisminuir.Location = New Point(Me.btnAgregar.Height + btnAgregar.Location.X, btnAgregar.Location.Y)
-                        Me.lblNombreVendedor.Visible = False
-                        My.Application.DoEvents()
-
-                        'Me.txtSubTotal.Size = New Size(99 * (1 - (PAncho / Ancho)), 32)
-                        'Me.txtIva.Size = New Size(99 * (1 - (PAncho / Ancho)), 32)
-                        'Me.txtpropina.Size = New Size(84 * (1 - (PAncho / Ancho)), 32)
-                        'Me.txtTotal.Size = New Size(109 * (1 - (PAncho / Ancho)), 32)
-
-                        'Me.C1Button4.Location = New Size(Me.C1Button1.Location.X + 5, FlowPProductos.Location.Y + 10)
-                        'Me.C1Button3.Location = New Size(Me.C1Button4.Location.X + 5, FlowPProductos.Location.Y + 10)
-                        'Me.C1Button5.Location = New Size(93, 64)
-                        'Me.btGuardar.Location = New Size(93, 64)
-                        'Me.BtnPago.Location = New Size(93, 64)
-
-
-                    Else
-
-                        FlowPProductos.Location = New Point(Me.FlowLayoutPanel1.Location.X, Me.FlowLayoutPanel1.Location.Y + FlowLayoutPanel1.Height + 10)
-                        FlowPProductos.Height = Me.Height - FlowLayoutPanel1.Location.Y - 45
-                        FlowPProductos.Width = Me.FlowLayoutPanel1.Width
-                        FlowPProductos.BackColor = Color.White
-                        FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-                        FlowPProductos.AutoScroll = True
-
-
-                    End If
-
-
-                End If
-
-
-            Else
-
-                Me.C1Button1.Size = New Size(93, 64)
-                Me.C1Button4.Size = New Size(93, 64)
-                Me.C1Button3.Size = New Size(93, 64)
-                Me.C1Button5.Size = New Size(93, 64)
-                Me.btGuardar.Size = New Size(93, 64)
-                Me.BtnPreFactura.Size = New Size(93, 64)
-
-                Me.lblNombreVendedor.Size = New Size(90, 27)
-                Me.ImgFoto.Size = New Size(103, 107)
-
-                Me.cboMesas.Size = New Size(133, 36)
-                Me.btnAgregar.Size = New Size(63, 59)
-                Me.btnDisminuir.Size = New Size(63, 59)
-                Me.btnAtras.Size = New Size(60, 98)
-                Me.btnSiguiente.Size = New Size(60, 98)
-                Me.btnEliminar.Size = New Size(132, 58)
-                Me.C1Button2.Size = New Size(132, 58)
-                Me.ckPropina.Size = New Size(116, 33)
-                Me.ckExonerar.Size = New Size(116, 33)
-                Me.txtSubTotal.Size = New Size(99, 32)
-                Me.txtIva.Size = New Size(99, 32)
-                Me.txtpropina.Size = New Size(84, 32)
-                Me.txtTotal.Size = New Size(109, 32)
-                My.Application.DoEvents()
-
-                '/////////////////////////////////////////////CAMBIO TAMAÑO DE LAS LETRAS ////////////////////////////////////
-                ckPropina.Font = New Font(ckPropina.Font.Name, 17, ckPropina.Font.Style)
-                ckExonerar.Font = New Font(ckExonerar.Font.Name, 17, ckPropina.Font.Style)
-                Me.cboMesas.Font = New Font(cboMesas.Font.Name, 16, cboMesas.Font.Style)
-                LblSubTotal.Font = New Font(LblSubTotal.Font.Name, 12, LblSubTotal.Font.Style)
-                LblIva.Font = New Font(LblIva.Font.Name, 12, LblIva.Font.Style)
-                LblPropina.Font = New Font(LblPropina.Font.Name, 12, LblPropina.Font.Style)
-                LblTotal.Font = New Font(LblTotal.Font.Name, 12, LblTotal.Font.Style)
-                txtSubTotal.Font = New Font(txtSubTotal.Font.Name, 12, txtSubTotal.Font.Style)
-                txtIva.Font = New Font(txtIva.Font.Name, 12, txtIva.Font.Style)
-                txtpropina.Font = New Font(txtpropina.Font.Name, 12, txtpropina.Font.Style)
-                txtTotal.Font = New Font(txtTotal.Font.Name, 12, txtTotal.Font.Style)
-                lblNombreVendedor.Font = New Font(lblNombreVendedor.Font.Name, 13, lblNombreVendedor.Font.Style)
-
-                '////////////////////////////////////////////////////////////////////////////
-                '///////////////////MUEVO LOS BOTONES /////////////////////////////////////////
-                '////////////////////////////////////////////////////////////////////////////
-
-                MoverBotones()
-
-                'btnX = Me.btnAtras.Location.X + Me.btnAtras.Width + 6
-                'btnY = Me.C1DockingTab1.Location.Y
-                'Me.C1DockingTab1.Location = New Point(btnX, btnY)
-
-                'btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6 '/////28 es el margen del formulario
-                'btnY = Me.btnAgregar.Location.Y
-                'Me.btnAgregar.Location = New Point(btnX, btnY)
-
-                'btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6 '/////28 es el margen del formulario
-                'btnY = Me.LblMesas.Location.Y
-                'Me.LblMesas.Location = New Point(btnX, btnY)
-
-                'btnX = Me.btnAgregar.Location.X + Me.btnAgregar.Width + 7 '/////28 es el margen del formulario
-                'btnY = Me.btnDisminuir.Location.Y
-                'Me.btnDisminuir.Location = New Point(btnX, btnY)
-
-                'btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-                'btnY = Me.btnEliminar.Location.Y
-                'Me.btnEliminar.Location = New Point(btnX, btnY)
-
-                'btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-                'btnY = Me.C1Button2.Location.Y
-                'Me.C1Button2.Location = New Point(btnX, btnY)
-
-                'btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-                'btnY = Me.ckPropina.Location.Y
-                'Me.ckPropina.Location = New Point(btnX, btnY)
-
-                'btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-                'btnY = Me.ckExonerar.Location.Y
-                'Me.ckExonerar.Location = New Point(btnX, btnY)
-
-                'btnX = Me.C1DockingTab1.Location.X + Me.C1DockingTab1.Width + 6
-                'btnY = Me.cboMesas.Location.Y
-                'Me.cboMesas.Location = New Point(btnX, btnY)
-
-                'btnX = Me.ckExonerar.Location.X + Me.ckExonerar.Width + 6
-                'btnY = Me.LblProductos.Location.Y
-                'Me.LblProductos.Location = New Point(btnX, btnY)
-
-                ''//////////////////TEXTO DE SUBTOTAL Y TOTALES //////////////////////
-                'btnX = Me.LblSubTotal.Location.X + Me.LblSubTotal.Width + 2
-                'btnY = Me.LblSubTotal.Location.Y
-                'Me.txtSubTotal.Location = New Point(btnX, btnY)
-
-                'btnX = Me.txtSubTotal.Location.X + Me.txtSubTotal.Width + 2
-                'btnY = Me.txtSubTotal.Location.Y
-                'Me.LblIva.Location = New Point(btnX, btnY)
-
-                'btnX = Me.LblIva.Location.X + Me.LblIva.Width + 2
-                'btnY = Me.LblIva.Location.Y
-                'Me.txtIva.Location = New Point(btnX, btnY)
-
-                'btnX = Me.txtIva.Location.X + Me.txtIva.Width + 2
-                'btnY = Me.txtIva.Location.Y
-                'Me.LblPropina.Location = New Point(btnX, btnY)
-
-                'btnX = Me.LblPropina.Location.X + Me.LblPropina.Width + 2
-                'btnY = Me.LblPropina.Location.Y
-                'Me.txtpropina.Location = New Point(btnX, btnY)
-
-                'btnX = Me.txtpropina.Location.X + Me.txtpropina.Width + 2
-                'btnY = Me.txtpropina.Location.Y
-                'Me.LblTotal.Location = New Point(btnX, btnY)
-
-                'btnX = Me.LblTotal.Location.X + Me.LblTotal.Width + 2
-                'btnY = Me.LblTotal.Location.Y
-                'Me.txtTotal.Location = New Point(btnX, btnY)
-
-                Me.C1Button1.Text = "Cerrar Sesion"
-                Me.C1Button3.Text = "Mis cuentas"
-                Me.C1Button4.Text = "Cancelar e Imprimir"
-                Me.C1Button5.Text = "Nueva cuenta"
-                Me.btGuardar.Text = "Guardar"
-                Me.BtnPago.Text = "Pago"
-                Me.BtnPreFactura.Text = "PreFactura"
-
-                Me.C1Button2.Text = "Precio Unitario"
-                Me.btnEliminar.Text = "Eliminar"
-                Me.btnEliminar.TextAlign = ContentAlignment.MiddleRight
-                btnX = Me.btnEliminar.Location.X + Me.btnEliminar.Width + 8
-                PAncho = C1Button1.Location.X - btnX   'Ancho - Me.Width
-                PLargo = Largo - Me.Height
-                My.Application.DoEvents()
-
-                FlowPProductos.Location = New Point(btnX, 32)
-                FlowPProductos.Height = 651 - PLargo
-                FlowPProductos.Width = PAncho - 6
-                FlowPProductos.BackColor = Color.White
-                FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-                FlowPProductos.AutoScroll = True
-                Me.FlowLayoutPanel1.Size = New Size(btnX - 10, Me.Height - FlowLayoutPanel1.Location.Y - 45)
-
-            End If
-
-
-
-        Else
-            Me.C1Button1.Size = New Size(93, 64)
-            Me.C1Button3.Size = New Size(93, 64)
-            Me.C1Button4.Size = New Size(93, 64)
-            Me.C1Button5.Size = New Size(93, 64)
-            Me.btGuardar.Size = New Size(93, 64)
-            Me.BtnPago.Size = New Size(93, 64)
-            Me.BtnPreFactura.Size = New Size(93, 64)
-
-
-            Me.ImgFoto.Size = New Size(Me.btGuardar.Size)
-            Me.lblNombreVendedor.Size = New Size(Me.btGuardar.Size)
-            Me.cboMesas.Size = New Size(133, 36)
-            Me.btnAgregar.Size = New Size(63, 59)
-            Me.btnDisminuir.Size = New Size(63, 59)
-            Me.btnAtras.Size = New Size(60, 98)
-            Me.btnSiguiente.Size = New Size(60, 98)
-            Me.btnEliminar.Size = New Size(132, 58)
-            Me.C1Button2.Size = New Size(132, 58)
-            Me.ckPropina.Size = New Size(116, 33)
-            Me.ckExonerar.Size = New Size(116, 33)
-            Me.txtSubTotal.Size = New Size(99, 32)
-            Me.txtIva.Size = New Size(99, 32)
-            Me.txtpropina.Size = New Size(84, 32)
-            Me.txtTotal.Size = New Size(109, 32)
-
-            MoverBotones()
-
-            Me.C1Button1.Text = "Cerrar Sesion"
-            Me.C1Button3.Text = "Mis cuentas"
-            Me.C1Button4.Text = "Cancelar e Imprimir"
-            Me.C1Button5.Text = "Nueva cuenta"
-            Me.btGuardar.Text = "Guardar"
-            Me.BtnPago.Text = "Pago"
-            Me.BtnPreFactura.Text = "PreFactura"
-
-
-
-            PAncho = Ancho - Me.Width
-            PLargo = Largo - Me.Height
-            btnX = Me.btnEliminar.Location.X + Me.btnEliminar.Width + 8
-            PAncho = C1Button1.Location.X - btnX   'Ancho - Me.Width
-            PLargo = Largo - Me.Height
-            My.Application.DoEvents()
-
-            FlowPProductos.Location = New Point(btnX, 32)
-            FlowPProductos.Height = 651 - PLargo
-            FlowPProductos.Width = PAncho - 6
-            FlowPProductos.BackColor = Color.White
-            FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-            FlowPProductos.AutoScroll = True
-            Me.FlowLayoutPanel1.Size = New Size(btnX - 10, Me.Height - FlowLayoutPanel1.Location.Y - 45)
-
-        End If
-
-    End Sub
-
     Public Sub CrearProductos(ByVal btnFP1 As Button)
         Dim Foto As String, myImagenConsulta As Image
 
-        Me.Controls.Remove(FlowPProductos) 'Elimino el flowPanel existente
-
-
-        '///////////////  AGREGO EL NUEVO flowPanel2 //////////////
-        FlowPProductos = New FlowLayoutPanel
-        FlowPProductos.Location = New Point(685, 35)
-        FlowPProductos.Height = 605
-        FlowPProductos.Width = 445
-        FlowPProductos.BackColor = Color.White
-        FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-        FlowPProductos.AutoScroll = True
-        Me.Controls.Add(FlowPProductos)
-
-        Responsivo()
+        ReiniciarProductos() 'nuevo panel de productos
 
         CommandString = "Select RutaCompartida From DatosEmpresa"
         Dim dtEmpresa As New DataTable
@@ -661,11 +79,8 @@ Public Class Form1
                 btn.Text = Mid(DTProductos.Rows(Posicion)("Descripcion_Producto"), 1, 45)
                 btn.Tag = DTProductos.Rows(Posicion)("Descripcion_Producto")
                 btn.Name = DTProductos.Rows(Posicion)("Cod_Productos")
-                btn.Height = 80
-                btn.Width = 98
+                EstilizarTarjeta(btn, False)
                 btn.ImageAlign = ContentAlignment.MiddleCenter
-
-                btn.VisualStyle = C1.Win.C1Input.VisualStyle.Office2007Blue
 
                 btn.TextAlign = ContentAlignment.BottomCenter
 
@@ -673,7 +88,7 @@ Public Class Form1
                     Foto = DTProductos.Rows(Posicion)("Foto")
                     myImagenConsulta = BytesToImagen(StringtoByte(Foto))
 
-                    btn.VisualStyle = C1.Win.C1Input.VisualStyle.System
+                    EstilizarTarjeta(btn, True)
                     btn.BackgroundImage = myImagenConsulta
                     btn.BackgroundImageLayout = ImageLayout.Stretch
                     btn.Text = ""
@@ -681,7 +96,6 @@ Public Class Form1
                     '////////////SI NO TIENE IMAGEN SOLO MUESTRO EL TEXTO //////
 
                     btn.TextAlign = ContentAlignment.MiddleCenter
-                    btn.Font = New Font("Arial", 9.0F, FontStyle.Regular)
 
                     'btn.VisualStyle = C1.Win.C1Input.VisualStyle.System
                     'btn.BackgroundImage = My.Resources.NoDisponible
@@ -702,6 +116,7 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        ConstruirDiseno()
         Application.DoEvents()
         Me.lblNombreVendedor.Text = NombreVendedor
         Dim TablaClientes As New DataTable, Foto As String, myImagenConsulta As Image
@@ -785,16 +200,7 @@ Public Class Form1
 
 
         '///////////////  AGREGO EL NUEVO flowPanel2 //////////////
-        FlowPProductos = New FlowLayoutPanel
-        FlowPProductos.Location = New Point(685, 32)
-        FlowPProductos.Height = 605
-        FlowPProductos.Width = 445
-        FlowPProductos.BackColor = Color.White
-        FlowPProductos.BorderStyle = BorderStyle.FixedSingle
-        FlowPProductos.AutoScroll = True
-        Me.Controls.Add(FlowPProductos)
-
-
+        ReiniciarProductos()
 
 
         ' CrearNumeroFactura()
@@ -824,10 +230,7 @@ Public Class Form1
                     AddHandler btn.Click, AddressOf ClickFP1
                     btn.Text = Mid(DTLineas.Rows(Posicion)("Descripcion_Linea").ToString, 1, 20)
                     btn.Name = DTLineas.Rows(Posicion)("Cod_Linea")
-                    btn.Height = 80
-                    btn.Width = 98
-
-                    btn.VisualStyle = C1.Win.C1Input.VisualStyle.Office2007Silver
+                    EstilizarTarjeta(btn, False)
 
                     btn.TextAlign = ContentAlignment.BottomCenter
                     btn.ImageAlign = ContentAlignment.TopCenter
@@ -846,11 +249,12 @@ Public Class Form1
                         Foto = DTLineas.Rows(Posicion)("Foto")
                         myImagenConsulta = BytesToImagen(StringtoByte(Foto))
 
-                        btn.VisualStyle = C1.Win.C1Input.VisualStyle.System
+                        EstilizarTarjeta(btn, True)
                         btn.BackgroundImage = myImagenConsulta
                         btn.BackgroundImageLayout = ImageLayout.Stretch
                         btn.Text = ""
                     Else
+                        EstilizarTarjeta(btn, True)
                         btn.BackgroundImage = My.Resources.NoDisponible
                     End If
 
@@ -1952,7 +1356,6 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Click(sender As Object, e As EventArgs) Handles Me.Click
-        Responsivo()
     End Sub
 
 

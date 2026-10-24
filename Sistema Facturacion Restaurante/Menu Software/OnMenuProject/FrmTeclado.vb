@@ -3,6 +3,7 @@ Public Class FrmTeclado
     Public Posicion As String
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        ConstruirDiseno()
         Application.DoEvents()
         Select Case Posicion
             Case "Nombre" : Me.Location = New Point(190, 148)

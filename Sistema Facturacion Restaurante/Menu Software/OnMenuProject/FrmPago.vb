@@ -93,14 +93,14 @@ Public Class FrmPago
 
         Leer("C")
     End Sub
-    Public Sub APlicarPagos()
+    Public Function APlicarPagos() As Boolean
 
         Dim i As Integer
         Dim Cadena As String = ""
-        Dim Lista() As String
 
-        Dim MonedaPago As String
-        Dim NombrePago As String
+        Dim NombrePago As String = ""
+        Dim MonedaPago As String = ""
+        Dim MontoDbl As Double
         Dim MontoPago As Decimal
 
         Dim MonedaFactura As String = "Cordobas"
@@ -111,10 +111,11 @@ Public Class FrmPago
         Dim StrSqlUpdate As String = ""
 
         Dim DataSet As New DataSet
-        Dim DataAdapter As SqlClient.SqlDataAdapter
+        Dim Transaccion As SqlClient.SqlTransaction = Nothing
 
-        Dim ComandoUpdate As SqlClient.SqlCommand
-        Dim iResultado As Integer
+        'Número de tarjeta y vencimiento de los pagos ya registrados, para no perderlos al reaplicar
+        Dim DatosTarjeta As New System.Collections.Generic.Dictionary(Of String, Object())(StringComparer.OrdinalIgnoreCase)
+        Dim Datos() As Object = Nothing
 
         '////////////////////////////////////////////////////////////
         ' CONSULTAR LOS DATOS DE LA FACTURA
@@ -147,7 +148,7 @@ Public Class FrmPago
             MessageBoxButtons.OK,
             MessageBoxIcon.Warning
         )
-            Exit Sub
+            Return False
         End If
 
         FechaFactura = CDate(
@@ -157,50 +158,6 @@ Public Class FrmPago
         MonedaFactura = CStr(
         DataSet.Tables("Consulta").Rows(0)("MonedaFactura")
     )
-
-        '////////////////////////////////////////////////////////////
-        ' ELIMINAR LOS MÉTODOS DE PAGO ANTERIORES
-        '////////////////////////////////////////////////////////////
-
-        StrSqlUpdate = "DELETE FROM Detalle_MetodoFacturas " &
-                   "WHERE Numero_Factura = @NumeroFactura " &
-                   "AND Fecha_Factura = @FechaFactura " &
-                   "AND Tipo_Factura = @TipoFactura"
-
-        Using ComandoDelete As New SqlClient.SqlCommand(
-        StrSqlUpdate, MiConexion
-    )
-
-            ComandoDelete.Parameters.Add(
-            "@NumeroFactura",
-            SqlDbType.NVarChar,
-            50
-        ).Value = Numero_Factura
-
-            ComandoDelete.Parameters.Add(
-            "@FechaFactura",
-            SqlDbType.SmallDateTime
-        ).Value = FechaFactura
-
-            ComandoDelete.Parameters.Add(
-            "@TipoFactura",
-            SqlDbType.NVarChar,
-            50
-        ).Value = "Factura"
-
-            If MiConexion.State <> ConnectionState.Open Then
-                MiConexion.Open()
-            End If
-
-            Try
-                ComandoDelete.ExecuteNonQuery()
-            Finally
-                If MiConexion.State = ConnectionState.Open Then
-                    MiConexion.Close()
-                End If
-            End Try
-
-        End Using
 
         '////////////////////////////////////////////////////////////
         ' AGREGAR EL CAMBIO COMO MÉTODO DE PAGO
@@ -258,151 +215,195 @@ Public Class FrmPago
         End If
 
         '////////////////////////////////////////////////////////////
-        ' INSERTAR LOS MÉTODOS DE PAGO
+        ' REEMPLAZAR LOS MÉTODOS DE PAGO (ELIMINAR + INSERTAR EN UNA SOLA TRANSACCIÓN)
         '////////////////////////////////////////////////////////////
 
-        StrSqlUpdate = "INSERT INTO Detalle_MetodoFacturas " &
-                   "(Numero_Factura, Fecha_Factura, Tipo_Factura, " &
-                   "NombrePago, Monto, NumeroTarjeta, FechaVence, Arqueado) " &
-                   "VALUES " &
-                   "(@NumeroFactura, @FechaFactura, @TipoFactura, " &
-                   "@NombrePago, @Monto, @NumeroTarjeta, @FechaVence, @Arqueado)"
+        If MiConexion.State <> ConnectionState.Open Then
+            MiConexion.Open()
+        End If
 
-        Using ComandoInsert As New SqlClient.SqlCommand(
-        StrSqlUpdate, MiConexion
-    )
+        Try
 
-            ComandoInsert.Parameters.Add(
-            "@NumeroFactura",
-            SqlDbType.NVarChar,
-            50
+            Transaccion = MiConexion.BeginTransaction()
+
+            '--------- Conservar tarjeta y vencimiento de los pagos actuales ---------
+            SqlString = "SELECT NombrePago, NumeroTarjeta, FechaVence " &
+                    "FROM Detalle_MetodoFacturas " &
+                    "WHERE Numero_Factura = @NumeroFactura " &
+                    "AND Fecha_Factura = @FechaFactura " &
+                    "AND Tipo_Factura = @TipoFactura"
+
+            Using ComandoTarjeta As New SqlClient.SqlCommand(
+            SqlString, MiConexion, Transaccion
         )
 
-            ComandoInsert.Parameters.Add(
-            "@FechaFactura",
-            SqlDbType.SmallDateTime
+                ComandoTarjeta.Parameters.Add("@NumeroFactura", SqlDbType.NVarChar, 50).Value = Numero_Factura
+                ComandoTarjeta.Parameters.Add("@FechaFactura", SqlDbType.SmallDateTime).Value = FechaFactura
+                ComandoTarjeta.Parameters.Add("@TipoFactura", SqlDbType.NVarChar, 50).Value = "Factura"
+
+                Using Lector As SqlClient.SqlDataReader = ComandoTarjeta.ExecuteReader()
+
+                    Do While Lector.Read()
+                        DatosTarjeta(CStr(Lector("NombrePago")).Trim()) =
+                        New Object() {Lector("NumeroTarjeta"), Lector("FechaVence")}
+                    Loop
+
+                End Using
+
+            End Using
+
+            '--------- Eliminar los métodos de pago anteriores ---------
+            StrSqlUpdate = "DELETE FROM Detalle_MetodoFacturas " &
+                       "WHERE Numero_Factura = @NumeroFactura " &
+                       "AND Fecha_Factura = @FechaFactura " &
+                       "AND Tipo_Factura = @TipoFactura"
+
+            Using ComandoDelete As New SqlClient.SqlCommand(
+            StrSqlUpdate, MiConexion, Transaccion
         )
 
-            ComandoInsert.Parameters.Add(
-            "@TipoFactura",
-            SqlDbType.NVarChar,
-            50
+                ComandoDelete.Parameters.Add("@NumeroFactura", SqlDbType.NVarChar, 50).Value = Numero_Factura
+                ComandoDelete.Parameters.Add("@FechaFactura", SqlDbType.SmallDateTime).Value = FechaFactura
+                ComandoDelete.Parameters.Add("@TipoFactura", SqlDbType.NVarChar, 50).Value = "Factura"
+
+                ComandoDelete.ExecuteNonQuery()
+
+            End Using
+
+            '--------- Insertar los métodos de pago ---------
+            StrSqlUpdate = "INSERT INTO Detalle_MetodoFacturas " &
+                       "(Numero_Factura, Fecha_Factura, Tipo_Factura, " &
+                       "NombrePago, Monto, NumeroTarjeta, FechaVence, Arqueado) " &
+                       "VALUES " &
+                       "(@NumeroFactura, @FechaFactura, @TipoFactura, " &
+                       "@NombrePago, @Monto, @NumeroTarjeta, @FechaVence, @Arqueado)"
+
+            Using ComandoInsert As New SqlClient.SqlCommand(
+            StrSqlUpdate, MiConexion, Transaccion
         )
 
-            ComandoInsert.Parameters.Add(
-            "@NombrePago",
-            SqlDbType.NVarChar,
-            50
-        )
+                ComandoInsert.Parameters.Add("@NumeroFactura", SqlDbType.NVarChar, 50)
+                ComandoInsert.Parameters.Add("@FechaFactura", SqlDbType.SmallDateTime)
+                ComandoInsert.Parameters.Add("@TipoFactura", SqlDbType.NVarChar, 50)
+                ComandoInsert.Parameters.Add("@NombrePago", SqlDbType.NVarChar, 50)
+                ComandoInsert.Parameters.Add("@Monto", SqlDbType.Decimal).Precision = 18
+                ComandoInsert.Parameters("@Monto").Scale = 2
+                ComandoInsert.Parameters.Add("@NumeroTarjeta", SqlDbType.NVarChar, 50)
+                ComandoInsert.Parameters.Add("@FechaVence", SqlDbType.SmallDateTime)
+                ComandoInsert.Parameters.Add("@Arqueado", SqlDbType.Bit)
 
-            ComandoInsert.Parameters.Add(
-            "@Monto",
-            SqlDbType.Decimal
-        ).Precision = 18
+                'La llave primaria incluye NombrePago: los elementos repetidos se suman en una sola fila
+                Dim Totales As New System.Collections.Generic.Dictionary(Of String, Decimal)(StringComparer.OrdinalIgnoreCase)
+                Dim Orden As New System.Collections.Generic.List(Of String)
 
-            ComandoInsert.Parameters("@Monto").Scale = 2
+                For i = 0 To Me.ListBoxMetodos.Items.Count - 1
 
-            ComandoInsert.Parameters.Add(
-            "@NumeroTarjeta",
-            SqlDbType.NVarChar,
-            50
-        )
-
-            ComandoInsert.Parameters.Add(
-            "@FechaVence",
-            SqlDbType.SmallDateTime
-        )
-
-            ComandoInsert.Parameters.Add(
-            "@Arqueado",
-            SqlDbType.Bit
-        )
-
-            For i = 0 To Me.ListBoxMetodos.Items.Count - 1
-
-                Cadena = CStr(Me.ListBoxMetodos.Items(i))
-                Lista = Cadena.Split("-"c)
-
-                If Lista.Length < 3 Then
-                    Throw New Exception(
-                    "El método de pago tiene un formato incorrecto: " &
-                    Cadena
-                )
-                End If
-
-                NombrePago = Lista(0).Trim()
-                MonedaPago = Lista(1).Trim()
-
-                If Not Decimal.TryParse(
-                Lista(2).Trim(),
-                Globalization.NumberStyles.Number,
-                Globalization.CultureInfo.CurrentCulture,
-                MontoPago
-            ) Then
-
-                    Throw New Exception(
-                    "No se pudo interpretar el importe del método de pago: " &
-                    Cadena
-                )
-
-                End If
-
-                ComandoInsert.Parameters("@NumeroFactura").Value =
-                Numero_Factura
-
-                ComandoInsert.Parameters("@FechaFactura").Value =
-                FechaFactura
-
-                ComandoInsert.Parameters("@TipoFactura").Value =
-                "Factura"
-
-                ComandoInsert.Parameters("@NombrePago").Value =
-                NombrePago
-
-                ComandoInsert.Parameters("@Monto").Value =
-                MontoPago
-
-                ComandoInsert.Parameters("@NumeroTarjeta").Value =
-                "0000"
-
-                ComandoInsert.Parameters("@FechaVence").Value =
-                FechaFactura
-
-                ComandoInsert.Parameters("@Arqueado").Value =
-                False
-
-                If MiConexion.State <> ConnectionState.Open Then
-                    MiConexion.Open()
-                End If
-
-                Try
-
-                    iResultado = ComandoInsert.ExecuteNonQuery()
-
-                Finally
-
-                    If MiConexion.State = ConnectionState.Open Then
-                        MiConexion.Close()
+                    Cadena = CStr(Me.ListBoxMetodos.Items(i))
+                    If Not ParsearMetodo(Cadena, NombrePago, MonedaPago, MontoDbl) Then
+                        Throw New Exception(
+                        "El método de pago tiene un formato incorrecto: " &
+                        Cadena
+                    )
                     End If
 
+                    If Totales.ContainsKey(NombrePago) Then
+                        Totales(NombrePago) += CDec(MontoDbl)
+                    Else
+                        Totales.Add(NombrePago, CDec(MontoDbl))
+                        Orden.Add(NombrePago)
+                    End If
+
+                Next
+
+                For Each NombrePago In Orden
+
+                    MontoPago = Totales(NombrePago)
+
+                    ComandoInsert.Parameters("@NumeroFactura").Value = Numero_Factura
+                    ComandoInsert.Parameters("@FechaFactura").Value = FechaFactura
+                    ComandoInsert.Parameters("@TipoFactura").Value = "Factura"
+                    ComandoInsert.Parameters("@NombrePago").Value = NombrePago
+                    ComandoInsert.Parameters("@Monto").Value = MontoPago
+
+                    If DatosTarjeta.TryGetValue(NombrePago, Datos) Then
+                        ComandoInsert.Parameters("@NumeroTarjeta").Value = Datos(0)
+                        ComandoInsert.Parameters("@FechaVence").Value = Datos(1)
+                    Else
+                        ComandoInsert.Parameters("@NumeroTarjeta").Value = "0000"
+                        ComandoInsert.Parameters("@FechaVence").Value = FechaFactura
+                    End If
+
+                    ComandoInsert.Parameters("@Arqueado").Value = False
+
+                    ComandoInsert.ExecuteNonQuery()
+
+                Next NombrePago
+
+            End Using
+
+            Transaccion.Commit()
+            Return True
+
+        Catch ex As Exception
+
+            If Transaccion IsNot Nothing Then
+                Try
+                    Transaccion.Rollback()
+                Catch
+                    'La transacción ya no está activa; no hay nada que revertir
                 End Try
+            End If
 
-            Next
+            MessageBox.Show(
+            "No se pudieron aplicar los pagos. No se realizó ningún cambio." &
+            vbCrLf & ex.Message,
+            "Aplicación de pagos",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error
+        )
 
-        End Using
+            Return False
 
-    End Sub
+        Finally
+
+            If MiConexion.State = ConnectionState.Open Then
+                MiConexion.Close()
+            End If
+
+        End Try
+
+    End Function
+
+    'Interpreta un elemento de ListBoxMetodos con formato "Nombre - Moneda - Monto".
+    'Se toman la moneda y el monto desde el final para tolerar guiones en el nombre.
+    Private Function ParsearMetodo(Cadena As String, ByRef NombrePago As String, ByRef MonedaPago As String, ByRef Monto As Double) As Boolean
+        Dim Separador As String = " - "
+        Dim PosMonto As Integer = Cadena.LastIndexOf(Separador)
+        If PosMonto <= 0 Then Return False
+
+        Dim PosMoneda As Integer = Cadena.LastIndexOf(Separador, PosMonto - 1)
+        If PosMoneda <= 0 Then Return False
+
+        NombrePago = Cadena.Substring(0, PosMoneda).Trim()
+        MonedaPago = Cadena.Substring(PosMoneda + Separador.Length, PosMonto - PosMoneda - Separador.Length).Trim()
+
+        Return Double.TryParse(Cadena.Substring(PosMonto + Separador.Length).Trim(),
+                               Globalization.NumberStyles.Number,
+                               Globalization.CultureInfo.CurrentCulture,
+                               Monto)
+    End Function
 
     Public Function CalcularPago(Numero_Pantalla As Double, MonedaPantalla As String) As Double
         Dim i As Double, Cadena As String = "", Lista() As String
         Dim MonedaPago As String, NombrePago As String, MontoPago As Double
         Dim Tasacambio As Double = 0, Monto As Double = 0, MonedaFactura As String = "Cordobas"
         Dim SqlString As String, TipoPago As String = "", TotalApagar As Double, TotalPagado As Double, Diferencia As Double
-        Dim DataSet As New DataSet, DataAdapter As New SqlClient.SqlDataAdapter, FechaFactura As Date
+        Dim DataSet As New DataSet, DataAdapter As New SqlClient.SqlDataAdapter, FechaFactura As Date = Date.Today
 
         '/////////////////////CONSULTO LOS DATOS DE LA FACTURA ///////////////////////////
-        SqlString = "SELECT Facturas.* FROM Facturas WHERE  (Numero_Factura = '" & Numero_Factura & "')"
+        SqlString = "SELECT Facturas.* FROM Facturas WHERE  (Numero_Factura = @NumeroFactura)"
         DataAdapter = New SqlClient.SqlDataAdapter(SqlString, MiConexion)
+        DataAdapter.SelectCommand.Parameters.Add("@NumeroFactura", SqlDbType.NVarChar, 50).Value = Numero_Factura
         DataAdapter.Fill(DataSet, "Factura")
         If Not DataSet.Tables("Factura").Rows.Count = 0 Then
             FechaFactura = DataSet.Tables("Factura").Rows(0)("Fecha_Factura")
@@ -420,29 +421,34 @@ Public Class FrmPago
         End If
 
         '////////////////////////////DATOS EN PANTALLA ///////////////////////////
-        SqlString = "SELECT NombrePago, TipoPago, Cod_Cuenta, Moneda FROM MetodoPago WHERE (NombrePago LIKE '%" & Me.CboMetodoPago.Text & "%') OR (NombrePago LIKE '%" & Me.CboMetodoPago.Text & "%') "
-        DataAdapter = New SqlClient.SqlDataAdapter(SqlString, MiConexion)
-        DataAdapter.Fill(DataSet, "CambioPantalla")
-        If Not DataSet.Tables("CambioPantalla").Rows.Count = 0 Then
-            TipoPago = DataSet.Tables("CambioPantalla").Rows(0)("TipoPago")
-            If TipoPago = "Cambio" Then
-                Numero_Pantalla = Numero_Pantalla * -1
+        If Me.CboMetodoPago.Text.Trim() <> "" Then
+            SqlString = "SELECT NombrePago, TipoPago, Cod_Cuenta, Moneda FROM MetodoPago WHERE (NombrePago = @NombrePago)"
+            DataAdapter = New SqlClient.SqlDataAdapter(SqlString, MiConexion)
+            DataAdapter.SelectCommand.Parameters.Add("@NombrePago", SqlDbType.NVarChar, 50).Value = Me.CboMetodoPago.Text.Trim()
+            DataAdapter.Fill(DataSet, "CambioPantalla")
+            If Not DataSet.Tables("CambioPantalla").Rows.Count = 0 Then
+                TipoPago = DataSet.Tables("CambioPantalla").Rows(0)("TipoPago")
+                If TipoPago = "Cambio" Then
+                    Numero_Pantalla = Numero_Pantalla * -1
+                End If
             End If
         End If
 
 
-        MonedaPago = 0
+        MontoPago = 0
         For i = 0 To Me.ListBoxMetodos.Items.Count - 1
             Cadena = ListBoxMetodos.Items(i)
-            Lista = Cadena.Split("-")
 
-            MonedaPago = Lista(1)
-            NombrePago = Lista(0)
-            Monto = Lista(2)
+            If Not ParsearMetodo(Cadena, NombrePago, MonedaPago, Monto) Then
+                Throw New Exception("El método de pago tiene un formato incorrecto: " & Cadena)
+            End If
 
             '/////////////////////CONSULTO SI ES CAMBIO ///////////////////////////
-            SqlString = "SELECT NombrePago, TipoPago, Cod_Cuenta, Moneda FROM MetodoPago WHERE  (NombrePago = '" & NombrePago & "') AND (TipoPago = 'Cambio')"
+            SqlString = "SELECT NombrePago, TipoPago, Cod_Cuenta, Moneda FROM MetodoPago WHERE  (NombrePago = @NombrePago) AND (TipoPago = 'Cambio')"
+            'Fill acumula filas: se descarta la tabla para que cada método se evalúe por separado
+            If DataSet.Tables.Contains("MetodoCambio") Then DataSet.Tables.Remove("MetodoCambio")
             DataAdapter = New SqlClient.SqlDataAdapter(SqlString, MiConexion)
+            DataAdapter.SelectCommand.Parameters.Add("@NombrePago", SqlDbType.NVarChar, 50).Value = NombrePago
             DataAdapter.Fill(DataSet, "MetodoCambio")
             If Not DataSet.Tables("MetodoCambio").Rows.Count = 0 Then
                 TipoPago = DataSet.Tables("MetodoCambio").Rows(0)("TipoPago")
@@ -463,8 +469,8 @@ Public Class FrmPago
                 '///////Convertir Moneda pago a Dolares //////////////////////////
                 Monto = Monto / BuscaTasaCambio(FechaFactura)
                 MontoPago = Monto + MontoPago
-            ElseIf trim(MonedaPago) = "Dolares" Then
-                '///////Convertir Moneda pago a Dolares //////////////////////////
+            ElseIf Trim(MonedaPago) = "Dolares" Then
+                '///////Convertir Moneda pago a Cordobas //////////////////////////
                 Monto = Monto * BuscaTasaCambio(FechaFactura)
                 MontoPago = Monto + MontoPago
             End If
@@ -473,7 +479,7 @@ Public Class FrmPago
 
         TotalApagar = TxtTotalApagar.Text
         TotalPagado = Format(MontoPago + Numero_Pantalla, "##,##0.00")
-        Diferencia = TotalApagar - TotalPagado
+        Diferencia = Round(TotalApagar - TotalPagado, 2)
 
 
         If Diferencia > 0 Then
@@ -487,6 +493,11 @@ Public Class FrmPago
             TxtSaldoFavor.Text = Format(Abs(Diferencia), "##,##0.00")
             txtDiferencia.Text = Format(Diferencia, "##,##0.00")
             TxtCambio.Text = Format(Abs(Diferencia), "##,##0.00")
+        Else
+            TxtSaldoDeudor.Text = "0.00"
+            TxtSaldoFavor.Text = "0.00"
+            txtDiferencia.Text = "0.00"
+            TxtCambio.Text = "0.00"
         End If
 
         CalcularPago = TotalPagado
@@ -573,7 +584,10 @@ Public Class FrmPago
                 Borrar(TxtImporte.Text)
 
             Case "."
-                TxtImporte.Text = TxtImporte.Text & "."
+                'Se parte de la parte entera (el texto puede ser "12.00") y se ignora si ya hay decimales
+                If UltDigito <> "." AndAlso Not CStr(Numero_Pantalla).Contains(".") Then
+                    TxtImporte.Text = CStr(Numero_Pantalla) & "."
+                End If
 
         End Select
 
@@ -614,11 +628,8 @@ Public Class FrmPago
             TxtSaldoFavor.Text = Format(Cambio, "##,##0.00")
             TxtSaldoDeudor.Text = Format(0, "##,##0.00")
             txtTotalPagado.Text = Format(MontoPagado, "##,##0.00")
-            If Cambio = 0 Then
-                txtDiferencia.Text = Format(0, "##,##0.00")
-            Else
-                txtDiferencia.Text = Format(Cambio - MontoAPagar, "##,##0.00")
-            End If
+            'Diferencia = a pagar - pagado (negativa cuando hay cambio), igual que en CalcularPago
+            txtDiferencia.Text = Format(-Cambio, "##,##0.00")
 
 
 
@@ -627,15 +638,9 @@ Public Class FrmPago
             TxtCambio.Text = Format(Cambio, "##,##0.00")
             TxtSaldoFavor.Text = Format(Cambio, "##,##0.00")
             txtTotalPagado.Text = Format(MontoPagado, "##,##0.00")
-            If MontoPagado = 0 Then
-                SaldoDeudor = MontoAPagar
-                TxtSaldoDeudor.Text = Format(SaldoDeudor, "##,##0.00")
-
-            Else
-                SaldoDeudor = MontoAPagar - MontoPagado
-                TxtSaldoDeudor.Text = Format(SaldoDeudor, "##,##0.00")
-                txtDiferencia.Text = Format(Abs(SaldoDeudor - MontoPagado), "##,##0.00")
-            End If
+            SaldoDeudor = MontoAPagar - MontoPagado
+            TxtSaldoDeudor.Text = Format(SaldoDeudor, "##,##0.00")
+            txtDiferencia.Text = Format(SaldoDeudor, "##,##0.00")
 
 
 
@@ -703,18 +708,12 @@ Public Class FrmPago
 
     Private Sub FrmPago_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim DataAdapter As New SqlClient.SqlDataAdapter, DataSet As New DataSet
-        Dim SQLInteres As String, TipoPago As String, SqlString As String
+        Dim SQLInteres As String
 
         SQLInteres = "SELECT  *  FROM MetodoPago"
         DataAdapter = New SqlClient.SqlDataAdapter(SQLInteres, MiConexion)
         DataAdapter.Fill(DataSet, "MetodoPago")
         Me.CboMetodoPago.DataSource = DataSet.Tables("MetodoPago")
-        If DataSet.Tables("MetodoPago").Rows.Count <> 0 Then
-            TipoPago = DataSet.Tables("MetodoPago").Rows(0)("TipoPago")
-            CboMetodoPago.Text = TipoPago
-        End If
-
-
         Me.CboMetodoPago.Text = "Efectivo"
 
 
@@ -819,7 +818,7 @@ Public Class FrmPago
         End If
 
 
-        APlicarPagos()
+        If Not APlicarPagos() Then Exit Sub
 
         Form1.C1Button4.Enabled = True
 
@@ -841,6 +840,17 @@ Public Class FrmPago
 
     Private Sub C1Button1_Click(sender As Object, e As EventArgs) Handles C1Button1.Click
         Dim Cadena As String, Monto As Double
+
+        If CboMetodoPago.Text.Trim() = "" OrElse CboMoneda.Text.Trim() = "" Then
+            MsgBox("Seleccione el método de pago y la moneda", vbExclamation, "Zeus Facturacion")
+            Exit Sub
+        End If
+
+        If Val(Replace(Me.TxtImporte.Text, ",", "")) <= 0 Then
+            MsgBox("Digite un importe mayor que cero", vbExclamation, "Zeus Facturacion")
+            Exit Sub
+        End If
+
         Cadena = CboMetodoPago.Text & " - " & CboMoneda.Text & " - " & TxtImporte.Text
         Me.ListBoxMetodos.Items.Add(Cadena)
 
@@ -856,6 +866,11 @@ Public Class FrmPago
 
     Private Sub C1Button2_Click(sender As Object, e As EventArgs) Handles C1Button2.Click
         Dim Cadena As String = "", Monto As Double = 0
+
+        If Me.ListBoxMetodos.SelectedItem Is Nothing Then
+            MsgBox("Seleccione el método de pago que desea quitar", vbExclamation, "Zeus Facturacion")
+            Exit Sub
+        End If
 
         Cadena = Me.ListBoxMetodos.SelectedItem
         ListBoxMetodos.Items.Remove(Cadena)

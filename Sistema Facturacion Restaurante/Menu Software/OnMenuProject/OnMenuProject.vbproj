@@ -77,6 +77,19 @@
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="EstiloTeclado.vb" />
+    <Compile Include="FrmTeclado.Diseno.vb">
+      <DependentUpon>FrmTeclado.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTecladoNumerico.Diseno.vb">
+      <DependentUpon>FrmTecladoNumerico.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Diseno.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>

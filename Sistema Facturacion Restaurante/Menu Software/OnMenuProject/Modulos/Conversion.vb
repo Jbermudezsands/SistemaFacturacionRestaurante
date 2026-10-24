@@ -128,6 +128,83 @@ Module Conversion
         Return arreglo
     End Function
 
+    '--- Los PNG transparentes guardados antes como JPEG quedaron con el fondo negro en la BD.
+    '--- Si el borde de la imagen es casi todo negro, pinta de blanco el negro conectado al borde (el negro interno de la imagen se conserva).
+    Function QuitarFondoNegro(ByVal Origen As Image) As Image
+        If Origen Is Nothing Then Return Nothing
+        Try
+            Dim Ancho As Integer = Origen.Width
+            Dim Alto As Integer = Origen.Height
+            Dim Bmp As New Bitmap(Ancho, Alto, Imaging.PixelFormat.Format32bppArgb)
+            Using G As Graphics = Graphics.FromImage(Bmp)
+                G.Clear(Color.White)
+                G.DrawImage(Origen, 0, 0, Ancho, Alto)
+            End Using
+
+            Dim Datos As Imaging.BitmapData = Bmp.LockBits(New Rectangle(0, 0, Ancho, Alto), Imaging.ImageLockMode.ReadWrite, Imaging.PixelFormat.Format32bppArgb)
+            Dim Bytes(Math.Abs(Datos.Stride) * Alto - 1) As Byte
+            System.Runtime.InteropServices.Marshal.Copy(Datos.Scan0, Bytes, 0, Bytes.Length)
+            Dim Stride As Integer = Datos.Stride
+            Const Umbral As Integer = 45
+
+            Dim EsNegro As Func(Of Integer, Integer, Boolean) = Function(X As Integer, Y As Integer) As Boolean
+                              Dim P As Integer = Y * Stride + X * 4
+                              Return Bytes(P) <= Umbral AndAlso Bytes(P + 1) <= Umbral AndAlso Bytes(P + 2) <= Umbral
+                          End Function
+
+            'verifico que el borde sea mayormente negro
+            Dim TotalBorde As Integer = 0, NegrosBorde As Integer = 0
+            For X As Integer = 0 To Ancho - 1
+                TotalBorde += 2
+                If EsNegro(X, 0) Then NegrosBorde += 1
+                If EsNegro(X, Alto - 1) Then NegrosBorde += 1
+            Next
+            For Y As Integer = 0 To Alto - 1
+                TotalBorde += 2
+                If EsNegro(0, Y) Then NegrosBorde += 1
+                If EsNegro(Ancho - 1, Y) Then NegrosBorde += 1
+            Next
+
+            If NegrosBorde < TotalBorde * 0.9 Then
+                Bmp.UnlockBits(Datos)
+                Bmp.Dispose()
+                Return Origen
+            End If
+
+            'relleno por inundacion desde el borde
+            Dim Visitado(Ancho * Alto - 1) As Boolean
+            Dim Pila As New Stack(Of Integer)
+            For X As Integer = 0 To Ancho - 1
+                Pila.Push(X)
+                Pila.Push((Alto - 1) * Ancho + X)
+            Next
+            For Y As Integer = 0 To Alto - 1
+                Pila.Push(Y * Ancho)
+                Pila.Push(Y * Ancho + Ancho - 1)
+            Next
+            While Pila.Count > 0
+                Dim Idx As Integer = Pila.Pop
+                If Visitado(Idx) Then Continue While
+                Visitado(Idx) = True
+                Dim X As Integer = Idx Mod Ancho
+                Dim Y As Integer = Idx \ Ancho
+                If Not EsNegro(X, Y) Then Continue While
+                Dim P As Integer = Y * Stride + X * 4
+                Bytes(P) = 255 : Bytes(P + 1) = 255 : Bytes(P + 2) = 255
+                If X > 0 Then Pila.Push(Idx - 1)
+                If X < Ancho - 1 Then Pila.Push(Idx + 1)
+                If Y > 0 Then Pila.Push(Idx - Ancho)
+                If Y < Alto - 1 Then Pila.Push(Idx + Ancho)
+            End While
+
+            System.Runtime.InteropServices.Marshal.Copy(Bytes, 0, Datos.Scan0, Bytes.Length)
+            Bmp.UnlockBits(Datos)
+            Return Bmp
+        Catch ex As Exception
+            Return Origen
+        End Try
+    End Function
+
     'Funcion que convierte de Byte() a Image
     Public Function BytesToImagen(ByVal Imagen As Byte()) As Image
         Try

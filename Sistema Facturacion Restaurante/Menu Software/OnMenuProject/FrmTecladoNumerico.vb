@@ -98,6 +98,6 @@ Public Class FrmTecladoNumerico
     End Sub
 
     Private Sub FrmTecladoNumerico_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        ConstruirDiseno()
     End Sub
 End Class

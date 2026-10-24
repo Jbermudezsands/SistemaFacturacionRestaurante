@@ -50,6 +50,17 @@ Reglas al trabajar con ella:
 - Antes de usar `MiConexion` verifica el estado, como ya se hace en `FrmPago.vb`: `If MiConexion.State <> ConnectionState.Open Then MiConexion.Open()` y ciérrala al terminar (`Finally`).
 - Para comandos nuevos prefiere `Using ... SqlCommand(sql, MiConexion)` con **parámetros** (`cmd.Parameters.AddWithValue`) en lugar de concatenar strings.
 
+### Conexión de pruebas (SQL Server local de desarrollo)
+
+Para pruebas y consultas SQL durante el desarrollo se usa esta BD local (no es de ningún cliente):
+
+```
+Password=P@ssword;Persist Security Info=True;User ID=sa;Initial Catalog=SistemaRestauranteISAKAYA;Data Source=JUANBERMUDEZ\SQL2022
+```
+
+- Solo para ejecutar consultas/pruebas manuales (p. ej. `sqlcmd`) o para el registro `Servidor` de `CntFacturacion.dll` en la máquina de desarrollo.
+- No copiarla al código fuente (sigue vigente la regla de usar `Conexion`).
+
 ### Trampas conocidas (no replicar)
 
 - `Globales.vb`: `TempConn` tiene un valor inicial con servidor y credenciales `sa` hardcodeados (`Data Source=DESKTOP-E2SQPU1\SQL2005`). Se sobrescribe en `FormLog_Load`; no depender de él.
