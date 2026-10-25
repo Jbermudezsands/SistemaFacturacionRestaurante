@@ -821,6 +821,7 @@ Public Class FrmPago
         If Not APlicarPagos() Then Exit Sub
 
         Form1.C1Button4.Enabled = True
+        Form1.ActualizarEstadoPago()
 
         Me.Close()
 
