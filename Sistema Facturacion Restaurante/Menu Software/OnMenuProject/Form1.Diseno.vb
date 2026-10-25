@@ -24,6 +24,7 @@ Partial Class Form1
     Dim tlpRaiz, tlpEncabezado, tlpCuenta, tlpAjustes, tlpOpciones, tlpTotales, tlpMenu, tlpAcciones As TableLayoutPanel
     Dim pnlCuenta, pnlCategorias, pnlProductos As Panel
     Dim Acciones() As C1.Win.C1Input.C1Button
+    Dim LblEstadoPago As Label
 
     '///////////////////////// ESTADO RESPONSIVO //////////////////////
     Dim ModoActual As Integer = -1
@@ -180,12 +181,13 @@ Partial Class Form1
         pnlCuenta = NuevoPanelBlanco(New Label)
         pnlCuenta.Padding = New Padding(12)
         pnlCuenta.Margin = New Padding(0, 0, 10, 0)
-        tlpCuenta = NuevaTabla(1, 4)
+        tlpCuenta = NuevaTabla(1, 5)
         tlpCuenta.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0!))
         tlpCuenta.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0!))
         tlpCuenta.RowStyles.Add(New RowStyle(SizeType.Absolute, 58.0!))
         tlpCuenta.RowStyles.Add(New RowStyle(SizeType.Absolute, 46.0!))
         tlpCuenta.RowStyles.Add(New RowStyle(SizeType.Absolute, 84.0!))
+        tlpCuenta.RowStyles.Add(New RowStyle(SizeType.Absolute, 34.0!))
 
         Me.C1DockingTab1.Dock = DockStyle.Fill
         Me.C1DockingTab1.Margin = New Padding(0, 0, 0, 8)
@@ -253,6 +255,14 @@ Partial Class Form1
         tlpCuenta.Controls.Add(tlpAjustes, 0, 1)
         tlpCuenta.Controls.Add(tlpOpciones, 0, 2)
         tlpCuenta.Controls.Add(tlpTotales, 0, 3)
+        LblEstadoPago = New Label
+        LblEstadoPago.AutoSize = False
+        LblEstadoPago.Dock = DockStyle.Fill
+        LblEstadoPago.Margin = New Padding(0, 6, 0, 0)
+        LblEstadoPago.TextAlign = ContentAlignment.MiddleCenter
+        LblEstadoPago.ForeColor = ColorTextoSecundario
+        LblEstadoPago.Text = "Sin pagos aplicados"
+        tlpCuenta.Controls.Add(LblEstadoPago, 0, 4)
         pnlCuenta.Controls.Add(tlpCuenta)
 
         '--- menu: categorias arriba, productos abajo
@@ -415,6 +425,7 @@ Partial Class Form1
         tlpCuenta.RowStyles(1).Height = CInt(58 * EscalaFuente)
         tlpCuenta.RowStyles(2).Height = CInt(46 * EscalaFuente)
         tlpCuenta.RowStyles(3).Height = CInt(84 * EscalaFuente)
+        tlpCuenta.RowStyles(4).Height = CInt(34 * EscalaFuente)
         tlpEncabezado.ColumnStyles(3).Width = CInt(230 * EscalaFuente)
         tlpEncabezado.ColumnStyles(5).Width = CInt(80 * EscalaFuente)
         tlpEncabezado.ColumnStyles(0).Width = If(Estrecho, 52.0!, 64.0!)
@@ -458,6 +469,7 @@ Partial Class Form1
             Valor.Font = Fuente(12.0!, FontStyle.Regular)
         Next
         Me.txtTotal.Font = Fuente(14.0!, FontStyle.Bold, "Segoe UI Semibold")
+        LblEstadoPago.Font = Fuente(11.0!, FontStyle.Bold, "Segoe UI Semibold")
 
         For Each F As Font In Anteriores
             F.Dispose()
