@@ -339,6 +339,7 @@ Public Class FormCuentas
                 Form1.txtpropina.Text = Format(tConsulta.Rows(0)("Propina"), "##,##0.00")
                 Form1.txtObservacion.Value = tConsulta.Rows(0)("Observaciones")
             End If
+            Form1.ActualizarEstadoPago()
             Me.Close()
 
         End If

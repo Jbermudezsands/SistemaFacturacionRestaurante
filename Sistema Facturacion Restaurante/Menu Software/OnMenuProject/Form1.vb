@@ -487,6 +487,7 @@ Public Class Form1
         Me.txtIva.Text = Format(Iva, "##,##0.00")
         Me.txtTotal.Text = Format(Total, "##,##0.00")
         Me.txtpropina.Text = Format(Propina, "##,##0.00")
+        ActualizarEstadoPago()
     End Sub
 
     Private Sub Guardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btGuardar.Click
@@ -792,7 +793,54 @@ Public Class Form1
     End Sub
 
 
+    'Monto pagado (en cordobas) de una cuenta; la fecha se toma de la propia factura
+    Private Function ObtenerPagadoCuenta(ByVal NumFactura As String) As Decimal
+        If NumFactura = "" Then Return 0D
+        Dim TablaFechaFactura As New DataTable
+        Using AdapterFecha As New SqlDataAdapter("SELECT Fecha_Factura FROM Facturas WHERE Numero_Factura = @NumeroFactura AND Tipo_Factura = 'Factura'", TempConn)
+            AdapterFecha.SelectCommand.Parameters.AddWithValue("@NumeroFactura", NumFactura)
+            AdapterFecha.Fill(TablaFechaFactura)
+        End Using
+        If TablaFechaFactura.Rows.Count = 0 Then Return 0D
+        Return ObtenerMontoPagadoCordobas(NumFactura, CDate(TablaFechaFactura.Rows(0)("Fecha_Factura")), "Factura")
+    End Function
+
+    'Muestra en la tarjeta de cuenta cuanto se ha pagado y cuanto queda pendiente
+    Public Sub ActualizarEstadoPago()
+        If LblEstadoPago Is Nothing Then Exit Sub
+
+        Dim Pagado As Decimal = ObtenerPagadoCuenta(NumeroFactura)
+        If Pagado <= 0D Then
+            LblEstadoPago.Text = "Sin pagos aplicados"
+            LblEstadoPago.ForeColor = ColorTextoSecundario
+            Exit Sub
+        End If
+
+        Dim TotalCuenta As Decimal
+        Decimal.TryParse(Me.txtTotal.Text, TotalCuenta)
+        Dim Pendiente As Decimal = TotalCuenta - Pagado
+        If Pendiente < 0D Then Pendiente = 0D
+
+        If Pendiente > 0D Then
+            LblEstadoPago.Text = "Pagado: " & Format(Pagado, "##,##0.00") & "   |   Pendiente: " & Format(Pendiente, "##,##0.00")
+            LblEstadoPago.ForeColor = Color.FromArgb(200, 90, 0)
+        Else
+            LblEstadoPago.Text = "Pagado: " & Format(Pagado, "##,##0.00") & "   |   Cuenta saldada"
+            LblEstadoPago.ForeColor = Color.FromArgb(30, 130, 60)
+        End If
+    End Sub
+
     Public Sub BackToLife(ByVal NumFactura As String)
+
+        'Cancelar e Imprimir queda bloqueado hasta imprimir la prefactura o aplicar pagos
+        Me.C1Button4.Enabled = False
+
+        'Si la cuenta ya tiene pagos aplicados se habilita Cancelar e Imprimir
+        If NumFactura <> "" Then
+            If ObtenerPagadoCuenta(NumFactura) > 0D Then
+                Me.C1Button4.Enabled = True
+            End If
+        End If
 
         If NumFactura = "" Then
             Me.cboMesas.Text = ""
@@ -822,6 +870,7 @@ Public Class Form1
         Me.C1TrueDBGrid1.Splits(0).DisplayColumns("Id_Detalle_Factura").Visible = False
         Me.C1TrueDBGrid1.Splits(0).DisplayColumns("Importe").Visible = False
         NumeroFactura = ""
+        ActualizarEstadoPago()
 
         '//////////////////////////////////////////////////////////////////////////////////////////////
     End Sub
@@ -998,7 +1047,17 @@ Public Class Form1
                 End If
                 '//////////////// Guardo detalle de Factura /////////////////
 
-                Dim CommandFactura As New SqlCommand("UPDATE Facturas SET [Activo] = 'False' ,[Cancelado] = 'False'   WHERE dbo.Facturas.Numero_Factura = '" & NumeroFactura & "' and dbo.Facturas.Tipo_Factura ='Factura' ", TempConn)
+                'Si FrmPago aplicó un método de pago la factura es de Contado, de lo contrario es de Crédito
+                Dim MetodoFactura As String = "Credito"
+                Dim MontoCreditoFactura As Double = CDbl(Me.txtTotal.Text)
+                If ObtenerMontoPagadoCordobas(NumeroFactura, DateTime.Now, "Factura") > 0 Then
+                    MetodoFactura = "Contado"
+                    MontoCreditoFactura = 0
+                End If
+                Dim CommandFactura As New SqlCommand("UPDATE Facturas SET [Activo] = 'False' ,[Cancelado] = 'False' ,[MetodoPago] = @MetodoPago ,[MontoCredito] = @MontoCredito WHERE dbo.Facturas.Numero_Factura = @NumeroFactura and dbo.Facturas.Tipo_Factura ='Factura' ", TempConn)
+                CommandFactura.Parameters.AddWithValue("@MetodoPago", MetodoFactura)
+                CommandFactura.Parameters.AddWithValue("@MontoCredito", MontoCreditoFactura)
+                CommandFactura.Parameters.AddWithValue("@NumeroFactura", NumeroFactura)
                 TempConn.Open()
                 CommandFactura.ExecuteNonQuery()
                 TempConn.Close()
@@ -1179,7 +1238,6 @@ Public Class Form1
         ClearTxtData()
         Actualiza = False
         FormCuentas.Show()
-        Me.C1Button4.Enabled = True
     End Sub
 
 
@@ -1243,7 +1301,6 @@ Public Class Form1
             ' Pasar los datos al formulario de pago.
             FrmPago.MontoAPagar = MontoPendiente.ToString("0.00")
             FrmPago.Numero_Factura = NumeroFactura
-            Me.C1Button4.Enabled = True
             FrmPago.Show()
 
         Catch ex As Exception
