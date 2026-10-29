@@ -3,7 +3,15 @@
   "WorkspaceRootPath": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{86DBBE75-64AD-4FA9-9FCD-12F9EA9A024F}|OnMenuProject\\OnMenuProject.vbproj|d:\\sistemas\\sistema facturacion restaurante\\sistema facturacion restaurante\\menu software\\onmenuproject\\funciones.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "AbsoluteMoniker": "D:0:0:{86DBBE75-64AD-4FA9-9FCD-12F9EA9A024F}|OnMenuProject\\OnMenuProject.vbproj|d:\\sistemas\\sistema facturacion restaurante\\sistema facturacion restaurante\\menu software\\onmenuproject\\form1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{86DBBE75-64AD-4FA9-9FCD-12F9EA9A024F}|OnMenuProject\\OnMenuProject.vbproj|solutionrelative:onmenuproject\\form1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86DBBE75-64AD-4FA9-9FCD-12F9EA9A024F}|OnMenuProject\\OnMenuProject.vbproj|D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\onmenuproject\\form1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{86DBBE75-64AD-4FA9-9FCD-12F9EA9A024F}|OnMenuProject\\OnMenuProject.vbproj|solutionrelative:onmenuproject\\form1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86DBBE75-64AD-4FA9-9FCD-12F9EA9A024F}|OnMenuProject\\OnMenuProject.vbproj|D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\onmenuproject\\funciones.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{86DBBE75-64AD-4FA9-9FCD-12F9EA9A024F}|OnMenuProject\\OnMenuProject.vbproj|solutionrelative:onmenuproject\\funciones.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
@@ -27,19 +35,42 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Funciones.vb",
-              "DocumentMoniker": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Funciones.vb",
-              "RelativeDocumentMoniker": "OnMenuProject\\Funciones.vb",
-              "ToolTip": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Funciones.vb",
-              "RelativeToolTip": "OnMenuProject\\Funciones.vb",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwC0BAAAQAAAAAAAAAA==",
+              "Title": "Form1.vb",
+              "DocumentMoniker": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Form1.vb",
+              "RelativeDocumentMoniker": "OnMenuProject\\Form1.vb",
+              "ToolTip": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Form1.vb",
+              "RelativeToolTip": "OnMenuProject\\Form1.vb",
+              "ViewState": "AgIAAOgBAAAAAAAAAAAgwO8BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-10-24T02:46:55.927Z",
+              "WhenOpened": "2026-10-28T22:33:25.996Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Form1.vb [Dise\u00F1o]",
+              "DocumentMoniker": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Form1.vb",
+              "RelativeDocumentMoniker": "OnMenuProject\\Form1.vb",
+              "ToolTip": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Form1.vb [Dise\u00F1o]",
+              "RelativeToolTip": "OnMenuProject\\Form1.vb [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-10-28T22:33:22.097Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Funciones.vb",
+              "DocumentMoniker": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Funciones.vb",
+              "RelativeDocumentMoniker": "OnMenuProject\\Funciones.vb",
+              "ToolTip": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\Funciones.vb",
+              "RelativeToolTip": "OnMenuProject\\Funciones.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-10-24T02:46:55.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "FormCuentas.vb [Dise\u00F1o]",
               "DocumentMoniker": "D:\\Sistemas\\Sistema Facturacion Restaurante\\Sistema Facturacion Restaurante\\Menu Software\\OnMenuProject\\FormCuentas.vb",
               "RelativeDocumentMoniker": "OnMenuProject\\FormCuentas.vb",

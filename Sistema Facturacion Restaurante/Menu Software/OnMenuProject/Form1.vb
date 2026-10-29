@@ -775,7 +775,13 @@ Public Class Form1
         ArepComanda.LblMesa.Text = Me.cboMesas.Text
         ArepComanda.lblfactura.Text = NumeroFactura
         ArepComanda.LblMesero.Text = NombreVendedor
-        If Tipo = "ComandaBar" Then ArepComanda.Label6.Text = "Comanda Bar"
+        If Tipo = "ComandaBar" Then
+            ' Titulo destacado (negrita y mas grande) para diferenciar la comanda del bar
+            ArepComanda.Label6.Text = "Comanda Bar"
+            ArepComanda.Label6.Style = "ddo-char-set: 0; text-align: center; font-weight: bold; font-size: 16pt; font-family: Microsoft Sans Serif; "
+            ArepComanda.Label6.Top = 0.02!
+            ArepComanda.Label6.Height = 0.28!
+        End If
 
         Dim ViewerForm As New FrmViewer()
         ViewerForm.arvMain.Document = ArepComanda.Document
