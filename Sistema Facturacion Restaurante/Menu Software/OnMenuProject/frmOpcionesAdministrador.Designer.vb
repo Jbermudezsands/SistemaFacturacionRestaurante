@@ -27,7 +27,7 @@ Partial Class frmOpcionesAdministrador
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(24, 41, 66)
-        Me.ClientSize = New System.Drawing.Size(820, 460)
+        Me.ClientSize = New System.Drawing.Size(1080, 460)
         Me.MinimumSize = New System.Drawing.Size(640, 400)
         Me.Name = "frmOpcionesAdministrador"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

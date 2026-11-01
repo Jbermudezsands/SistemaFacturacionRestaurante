@@ -9,6 +9,7 @@ Public Class frmClavesVendedor
     Private TxtCodigo As TextBox
     Private TxtNombre As TextBox
     Private TxtClave As TextBox
+    Private CboTipo As ComboBox
     Private WithEvents ChkMostrar As CheckBox
     Private LblAyuda As Label
     Private WithEvents BtnGuardar As Button
@@ -23,7 +24,7 @@ Public Class frmClavesVendedor
     Private Sub ConstruirDiseno()
         Me.SuspendLayout()
 
-        Dim Encabezado As Panel = CajaEncabezado("Vendedores", "Cambia el nombre o la contraseña de un vendedor")
+        Dim Encabezado As Panel = CajaEncabezado("Vendedores", "Cambia el nombre, el tipo o la contraseña de un vendedor")
 
         Dim Cuerpo As New TableLayoutPanel
         Cuerpo.Dock = DockStyle.Fill
@@ -50,11 +51,11 @@ Public Class frmClavesVendedor
 
         Dim Campos As New TableLayoutPanel
         Campos.Dock = DockStyle.Top
-        Campos.Height = 232
+        Campos.Height = 224
         Campos.ColumnCount = 1
         Campos.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0!))
-        For i As Integer = 1 To 6
-            Campos.RowStyles.Add(New RowStyle(SizeType.Absolute, If(i Mod 2 = 1, 24.0!, 38.0!)))
+        For i As Integer = 1 To 8
+            Campos.RowStyles.Add(New RowStyle(SizeType.Absolute, If(i Mod 2 = 1, 22.0!, 34.0!)))
         Next
 
         TxtCodigo = New TextBox
@@ -71,14 +72,23 @@ Public Class frmClavesVendedor
 
         AgregarCampo(Campos, 0, "Código", TxtCodigo)
         AgregarCampo(Campos, 2, "Nombre", TxtNombre)
-        AgregarCampo(Campos, 4, "Contraseña", TxtClave)
+
+        CboTipo = New ComboBox
+        CboTipo.DropDownStyle = ComboBoxStyle.DropDownList
+        CboTipo.Dock = DockStyle.Fill
+        CboTipo.Font = CajaFuenteTexto
+        CboTipo.Items.AddRange(New Object() {"Mesero", "Cajero", "Administrador"})
+        CboTipo.SelectedIndex = 0
+
+        AgregarCampo(Campos, 4, "Tipo", CboTipo)
+        AgregarCampo(Campos, 6, "Contraseña", TxtClave)
 
         ChkMostrar = New CheckBox
         ChkMostrar.Text = "Mostrar contraseña"
         ChkMostrar.AutoSize = True
         ChkMostrar.Font = CajaFuenteTexto
         ChkMostrar.ForeColor = CajaTextoSecundario
-        ChkMostrar.Location = New Point(0, 244)
+        ChkMostrar.Location = New Point(0, 6)
 
         LblAyuda = New Label
         LblAyuda.Dock = DockStyle.Fill
@@ -147,6 +157,7 @@ Public Class frmClavesVendedor
         TxtCodigo.Text = ""
         TxtNombre.Text = ""
         TxtClave.Text = ""
+        CboTipo.SelectedIndex = 0
         If Seleccionar <> "" Then
             For Each Fila As DataGridViewRow In Grid.Rows
                 If Convert.ToString(Fila.Cells("Cod_Vendedor").Value) = Seleccionar Then
@@ -164,6 +175,11 @@ Public Class frmClavesVendedor
         TxtCodigo.Text = Fila("Cod_Vendedor").ToString()
         TxtNombre.Text = If(IsDBNull(Fila("Nombre_Vendedor")), "", Fila("Nombre_Vendedor").ToString())
         TxtClave.Text = If(IsDBNull(Fila("Clave")), "", Fila("Clave").ToString())
+
+        'Tipo Null o desconocido se muestra como Mesero (igual que en FormLog)
+        Dim Tipo As String = If(IsDBNull(Fila("Tipo")), "", Fila("Tipo").ToString().Trim())
+        Dim Indice As Integer = CboTipo.FindStringExact(Tipo)
+        CboTipo.SelectedIndex = If(Indice >= 0, Indice, 0)
     End Sub
 
     Private Sub ChkMostrar_CheckedChanged(ByVal sender As Object, ByVal e As EventArgs) Handles ChkMostrar.CheckedChanged
@@ -184,8 +200,9 @@ Public Class frmClavesVendedor
 
         Try
             Using cn As New SqlConnection(Conexion)
-                Using cmd As New SqlCommand("UPDATE Vendedores SET Nombre_Vendedor = @Nombre, [Contraseña] = @Clave WHERE Cod_Vendedor = @Codigo", cn)
+                Using cmd As New SqlCommand("UPDATE Vendedores SET Nombre_Vendedor = @Nombre, Tipo = @Tipo, [Contraseña] = @Clave WHERE Cod_Vendedor = @Codigo", cn)
                     cmd.Parameters.AddWithValue("@Nombre", TxtNombre.Text.Trim())
+                    cmd.Parameters.AddWithValue("@Tipo", CboTipo.Text)
                     cmd.Parameters.AddWithValue("@Clave", If(TxtClave.Text = "", CType(DBNull.Value, Object), TxtClave.Text))
                     cmd.Parameters.AddWithValue("@Codigo", TxtCodigo.Text)
                     cn.Open()

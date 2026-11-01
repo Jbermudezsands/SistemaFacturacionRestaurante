@@ -4,6 +4,7 @@ Public Class frmOpcionesAdministrador
     Private WithEvents BtnImpresoras As Button
     Private WithEvents BtnMetodosPago As Button
     Private WithEvents BtnClaves As Button
+    Private WithEvents BtnEnsambleDia As Button
     Private WithEvents BtnSalir As Button
 
     Private Sub BtnClaves_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnClaves.Click
@@ -33,6 +34,8 @@ Public Class frmOpcionesAdministrador
         Opciones.Controls.Add(BtnMetodosPago)
         BtnClaves = CajaOpcion("Vendedores", "Cambiar el nombre y la contraseña de cada vendedor", "usuarios")
         Opciones.Controls.Add(BtnClaves)
+        BtnEnsambleDia = CajaOpcion("Ensamble del día", "Procesar los productos ensamble facturados en el día", "ensamble")
+        Opciones.Controls.Add(BtnEnsambleDia)
 
         Dim Pie As New Panel
         Pie.Dock = DockStyle.Bottom
@@ -57,6 +60,12 @@ Public Class frmOpcionesAdministrador
 
     Private Sub BtnMetodosPago_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnMetodosPago.Click
         Using Pantalla As New frmMetodoPago
+            Pantalla.ShowDialog(Me)
+        End Using
+    End Sub
+
+    Private Sub BtnEnsambleDia_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnEnsambleDia.Click
+        Using Pantalla As New frmEnsambleDia
             Pantalla.ShowDialog(Me)
         End Using
     End Sub

@@ -167,6 +167,12 @@ Module EstiloCaja
                     Case "usuarios"
                         G.DrawEllipse(Lapiz, 24, 6, 24, 24)
                         G.DrawArc(Lapiz, 8, 36, 56, 56, 200, 140)
+                    Case "ensamble"
+                        G.DrawRectangle(Lapiz, 8, 38, 24, 24)
+                        G.DrawRectangle(Lapiz, 40, 38, 24, 24)
+                        G.DrawRectangle(Lapiz, 24, 6, 24, 24)
+                        G.DrawLine(Lapiz, 20, 38, 30, 30)
+                        G.DrawLine(Lapiz, 52, 38, 42, 30)
                     Case "impresoras"
                         G.DrawRectangle(Lapiz, 20, 6, 32, 20)
                         G.DrawRectangle(Lapiz, 6, 26, 60, 26)

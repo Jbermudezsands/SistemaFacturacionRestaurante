@@ -847,8 +847,9 @@ Public Class FrmPago
             Exit Sub
         End If
 
-        If Val(Replace(Me.TxtImporte.Text, ",", "")) <= 0 Then
-            MsgBox("Digite un importe mayor que cero", vbExclamation, "Zeus Facturacion")
+        If Not EsMontoValido(Me.TxtImporte.Text) Then
+            MsgBox("Digite un importe numérico mayor que cero", vbExclamation, "Zeus Facturacion")
+            Me.TxtImporte.Focus()
             Exit Sub
         End If
 
@@ -905,5 +906,64 @@ Public Class FrmPago
 
     Private Sub Label6_DoubleClick(sender As Object, e As EventArgs) Handles Label6.DoubleClick
         AgregarMetodo("Efectivo")
+    End Sub
+
+    'Un monto es válido si no está en blanco, es numérico y es mayor que cero
+    Private Function EsMontoValido(Texto As String) As Boolean
+        Dim Valor As Double
+        If String.IsNullOrWhiteSpace(Texto) Then Return False
+        If Not Double.TryParse(Texto.Trim(), Globalization.NumberStyles.Number, Globalization.CultureInfo.CurrentCulture, Valor) Then Return False
+        Return Valor > 0
+    End Function
+
+    'Doble clic en Importe: agrega el importe digitado igual que C1Button1 (que valida el monto)
+    Private Sub TxtImporte_DoubleClick(sender As Object, e As EventArgs) Handles TxtImporte.DoubleClick
+        C1Button1_Click(C1Button1, EventArgs.Empty)
+    End Sub
+
+    'Doble clic en Cambio: agrega el método de tipo "Cambio" en la moneda seleccionada
+    Private Sub TxtCambio_DoubleClick(sender As Object, e As EventArgs) Handles TxtCambio.DoubleClick
+        Dim Cadena As String, Monto As Double
+        Dim NombreCambio As String = ""
+
+        If CboMoneda.Text.Trim() = "" Then
+            MsgBox("Seleccione la moneda", vbExclamation, "Zeus Facturacion")
+            Exit Sub
+        End If
+
+        If Not EsMontoValido(Me.TxtCambio.Text) Then
+            MsgBox("No hay un cambio numérico mayor que cero para agregar", vbExclamation, "Zeus Facturacion")
+            Exit Sub
+        End If
+
+        Dim SqlString As String = "SELECT TOP 1 NombrePago FROM MetodoPago WHERE TipoPago = 'Cambio' AND Moneda = @Moneda"
+
+        Using Comando As New SqlClient.SqlCommand(SqlString, MiConexion)
+            Comando.Parameters.AddWithValue("@Moneda", CboMoneda.Text.Trim())
+
+            If MiConexion.State <> ConnectionState.Open Then MiConexion.Open()
+
+            Try
+                Dim Resultado As Object = Comando.ExecuteScalar()
+                If Resultado IsNot Nothing AndAlso Resultado IsNot DBNull.Value Then
+                    NombreCambio = CStr(Resultado)
+                End If
+            Finally
+                If MiConexion.State = ConnectionState.Open Then MiConexion.Close()
+            End Try
+        End Using
+
+        If NombreCambio = "" Then
+            MsgBox("No existe un método de pago de tipo Cambio en " & CboMoneda.Text, vbExclamation, "Zeus Facturacion")
+            Exit Sub
+        End If
+
+        Cadena = NombreCambio & " - " & CboMoneda.Text.Trim() & " - " & Me.TxtCambio.Text
+        Me.ListBoxMetodos.Items.Add(Cadena)
+
+        Me.TxtImporte.Text = "0.00"
+
+        Monto = CalcularPago(Me.TxtImporte.Text, Me.CboMoneda.Text)
+        Me.txtTotalPagado.Text = Monto
     End Sub
 End Class

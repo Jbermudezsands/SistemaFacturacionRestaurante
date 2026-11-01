@@ -243,6 +243,108 @@ OnMenuProject
 <member name="T:OnMenuProject.frmOpcionesCajero">
  <summary>Menu del cajero: cuentas de mesas, arqueo de caja y metodos de pago.</summary>
 </member>
+<member name="T:OnMenuProject.EnsambleDiaImpresion">
+ <summary>Arma y muestra el reporte ArepEnsambleDia a partir del plan del dia.</summary>
+</member>
+<member name="T:OnMenuProject.EnsambleDiaNegocioException">
+ <summary>Error de regla de negocio: el mensaje es apto para mostrarse tal cual al usuario.</summary>
+</member>
+<member name="T:OnMenuProject.EnsambleDiaComponente">
+ <summary>Componente de la receta de un producto ensamble, ya multiplicado por las unidades a ensamblar.</summary>
+</member>
+<member name="P:OnMenuProject.EnsambleDiaComponente.CantidadUnidad">
+ <summary>Cantidad requerida por cada unidad ensamblada (Componentes.Requerido).</summary>
+</member>
+<member name="P:OnMenuProject.EnsambleDiaComponente.CantidadTotal">
+ <summary>Cantidad a descargar: CantidadUnidad x unidades a ensamblar del producto.</summary>
+</member>
+<member name="P:OnMenuProject.EnsambleDiaComponente.EsServicio">
+ <summary>Los servicios no mueven inventario: no se descargan ni se costean.</summary>
+</member>
+<member name="T:OnMenuProject.EnsambleDiaProducto">
+ <summary>Producto tipo Ensamble facturado en el dia con su receta.</summary>
+</member>
+<member name="P:OnMenuProject.EnsambleDiaProducto.Vendida">
+ <summary>Unidades facturadas en el dia (facturas no canceladas).</summary>
+</member>
+<member name="P:OnMenuProject.EnsambleDiaProducto.Procesada">
+ <summary>Unidades que ya se ensamblaron en procesos anteriores del mismo dia.</summary>
+</member>
+<member name="P:OnMenuProject.EnsambleDiaProducto.Pendiente">
+ <summary>Unidades que faltan por ensamblar.</summary>
+</member>
+<member name="T:OnMenuProject.EnsambleDiaResultado">
+ <summary>Resultado de un proceso: documentos generados y su costo.</summary>
+</member>
+<member name="P:OnMenuProject.EnsambleDiaResultado.SinReceta">
+ <summary>Productos que se omitieron por no tener componentes.</summary>
+</member>
+<member name="T:OnMenuProject.EnsambleDiaSolicitud">
+ <summary>Parametros de un proceso de ensamble del dia.</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.ObtenerVentasEnsamble(System.DateTime)">
+ <summary>Productos Ensamble facturados en el dia con lo vendido y lo ya procesado.</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.ObtenerComponentes(System.Double)">
+ <summary>Componentes de la receta de un producto (cantidad por unidad).</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.ObtenerProcesosDelDia(System.DateTime)">
+ <summary>Procesos ya realizados para el dia (para mostrar los documentos generados).</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.ObtenerClienteInventario">
+ <summary>Cuenta de cliente marcada como inventario fisico (Nothing si no hay).</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.ObtenerProveedorInventario">
+ <summary>Cuenta de proveedor marcada como inventario fisico (Nothing si no hay).</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.SiguienteConsecutivo(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.String)">
+ <summary>Siguiente numero del consecutivo (columna de la tabla Consecutivos), ya reservado.</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.CostoPromedio(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.String,System.DateTime)">
+ <summary>
+ Costo promedio en cordobas a la fecha. Si no hay costo promedio se toma el ultimo costo facturado.
+ </summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.ActualizarExistencia(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.String,System.DateTime)">
+ <summary>Recalcula DetalleBodegas.Existencia del producto en cada una de sus bodegas.</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaRepositorio.InsertarProceso(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,OnMenuProject.EnsambleDiaSolicitud,System.String,System.String,System.Double)">
+ <summary>Crea el encabezado del proceso y devuelve su Id.</summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaServicio.ConstruirPlan(System.DateTime)">
+ <summary>
+ Productos Ensamble facturados en la fecha con su receta. La cantidad a ensamblar es lo facturado
+ menos lo que ya se proceso ese dia.
+ </summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaServicio.ConstruirTablaReporte(System.Collections.Generic.List{OnMenuProject.EnsambleDiaProducto})">
+ <summary>
+ Tabla plana (un renglon por componente) que alimenta el reporte. Solo incluye lo pendiente de ensamblar;
+ un producto sin receta sale con un renglon vacio para que se note.
+ </summary>
+</member>
+<member name="M:OnMenuProject.EnsambleDiaServicio.CostearYVerificar(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Collections.Generic.List{OnMenuProject.EnsambleDiaProducto},OnMenuProject.EnsambleDiaSolicitud)">
+ <summary>
+ Asigna el costo promedio a cada componente, totaliza lo que sale de la bodega por componente
+ y valida costo y existencia. Reune todos los problemas antes de avisar.
+ </summary>
+</member>
+<member name="T:OnMenuProject.frmEnsambleDia">
+ <summary>
+ Ensamble del dia: lista los productos tipo Ensamble facturados en la fecha con sus componentes y la
+ cantidad a ensamblar, imprime la hoja de produccion y procesa la salida de bodega de los componentes y
+ el ingreso (Mercancia Recibida) de los productos ensamblados, dejando trazabilidad.
+ </summary>
+</member>
+<member name="M:OnMenuProject.frmEnsambleDia.CargarPlan">
+ <summary>Lee de la base lo facturado del dia, arma el plan y lo muestra en el grid.</summary>
+</member>
+<member name="T:OnMenuProject.ArepEnsambleDia">
+ <summary>
+ Ensamble del dia: por cada producto Ensamble facturado, la cantidad a ensamblar y los componentes
+ con la cantidad por unidad y la cantidad total a usar.
+ </summary>
+</member>
 <member name="T:OnMenuProject.EstiloCaja">
  <summary>
  Paleta y controles compartidos por las pantallas de Cajero y Administrador.

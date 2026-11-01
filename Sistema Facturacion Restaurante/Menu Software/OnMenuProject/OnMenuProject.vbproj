@@ -201,6 +201,22 @@
     <Compile Include="frmOpcionesCajero.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Clases\EnsambleDia\EnsambleDiaImpresion.vb" />
+    <Compile Include="Clases\EnsambleDia\EnsambleDiaModelos.vb" />
+    <Compile Include="Clases\EnsambleDia\EnsambleDiaRepositorio.vb" />
+    <Compile Include="Clases\EnsambleDia\EnsambleDiaServicio.vb" />
+    <Compile Include="frmEnsambleDia.Designer.vb">
+      <DependentUpon>frmEnsambleDia.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEnsambleDia.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\ArepEnsambleDia.Designer.vb">
+      <DependentUpon>ArepEnsambleDia.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ArepEnsambleDia.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Modulos\EstiloCaja.vb" />
     <Compile Include="Reportes\ArepArqueoCaja.Designer.vb">
       <DependentUpon>ArepArqueoCaja.vb</DependentUpon>
