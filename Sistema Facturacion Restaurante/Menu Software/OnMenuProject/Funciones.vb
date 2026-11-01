@@ -199,6 +199,42 @@ Module Funciones
 
 
 
+    ''' <summary>Guarda en Impresoras.dll la impresora de un modulo (Factura, Recibo, Comanda, ComandaBar). Si el modulo no existe lo agrega.</summary>
+    Public Sub GuardaImpresora(ByVal Modulo As String, ByVal Impresora As String)
+
+        Dim RutaBD As String =
+        My.Application.Info.DirectoryPath & "\Impresoras.dll"
+
+        Dim ConexionImpresora As String =
+        "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & RutaBD & ";"
+
+        Using MiConexionImpresora As New OleDb.OleDbConnection(ConexionImpresora)
+
+            MiConexionImpresora.Open()
+
+            Dim Existe As Boolean
+            Using Consulta As New OleDb.OleDbCommand("SELECT COUNT(*) FROM Impresoras WHERE TipoImpresora = ?", MiConexionImpresora)
+                Consulta.Parameters.AddWithValue("@Modulo", Modulo)
+                Existe = Convert.ToInt32(Consulta.ExecuteScalar()) > 0
+            End Using
+
+            If Existe Then
+                Using Comando As New OleDb.OleDbCommand("UPDATE Impresoras SET Impresora = ? WHERE TipoImpresora = ?", MiConexionImpresora)
+                    Comando.Parameters.AddWithValue("@Impresora", Impresora)
+                    Comando.Parameters.AddWithValue("@Modulo", Modulo)
+                    Comando.ExecuteNonQuery()
+                End Using
+            Else
+                Using Comando As New OleDb.OleDbCommand("INSERT INTO Impresoras (Impresora, TipoImpresora) VALUES (?, ?)", MiConexionImpresora)
+                    Comando.Parameters.AddWithValue("@Impresora", Impresora)
+                    Comando.Parameters.AddWithValue("@Modulo", Modulo)
+                    Comando.ExecuteNonQuery()
+                End Using
+            End If
+
+        End Using
+
+    End Sub
     Public Function Establecer_Impresora(
     ByVal NamePrinter As String
 ) As Boolean

@@ -406,6 +406,21 @@ Public Class Form1
     End Sub
 
 
+    ''' <summary>Mueve la fila actual del grid de productos y la deja visible y resaltada.</summary>
+    Private Sub MoverFilaCuenta(ByVal Paso As Integer)
+        Dim Total As Integer = Me.C1TrueDBGrid1.RowCount
+        If Total = 0 Then Exit Sub
+
+        Dim Nueva As Integer = Me.C1TrueDBGrid1.Row + Paso
+        If Me.C1TrueDBGrid1.Row < 0 Then Nueva = If(Paso > 0, 0, Total - 1)
+        If Nueva < 0 Then Nueva = 0
+        If Nueva > Total - 1 Then Nueva = Total - 1
+
+        Me.C1TrueDBGrid1.Focus()
+        Me.C1TrueDBGrid1.Row = Nueva
+        Me.C1TrueDBGrid1.SelectedRows.Clear()
+        Me.C1TrueDBGrid1.SelectedRows.Add(Nueva)
+    End Sub
     Private Sub btnSiguiente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSiguiente.Click
         'If (BindingSource1.Position + 1 < BindingSource1.Count) Then
         '    BindingSource1.MoveNext()
@@ -417,7 +432,7 @@ Public Class Form1
         '    Me.BindingSource1.Position = C1TrueDBGrid1.Bookmark
         'End If
 
-        Me.C1TrueDBGrid1.MoveNext()
+        MoverFilaCuenta(1)
     End Sub
 
     Private Sub btnAtras_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAtras.Click
@@ -430,7 +445,7 @@ Public Class Form1
         '    Me.C1TrueDBGrid1.Bookmark = Me.BindingSource1.Position
         '    Me.BindingSource1.Position = C1TrueDBGrid1.Bookmark
         'End If
-        Me.C1TrueDBGrid1.MovePrevious()
+        MoverFilaCuenta(-1)
 
     End Sub
 
@@ -864,7 +879,7 @@ Public Class Form1
 
         Me.C1TrueDBGrid1.Columns(6).DefaultValue = DateTime.Now
         Me.C1TrueDBGrid1.Columns(7).DefaultValue = "Factura"
-        Me.C1TrueDBGrid1.RowHeight = 20
+        Me.C1TrueDBGrid1.RowHeight = 30
         Me.C1TrueDBGrid1.Splits(0).DisplayColumns(0).Width = 60
         Me.C1TrueDBGrid1.Splits(0).DisplayColumns(2).Width = 60
         Me.C1TrueDBGrid1.Columns(4).NumberFormat = "##,##0.00"
@@ -875,6 +890,7 @@ Public Class Form1
         Me.C1TrueDBGrid1.Splits(0).DisplayColumns(7).Visible = False
         Me.C1TrueDBGrid1.Splits(0).DisplayColumns("Id_Detalle_Factura").Visible = False
         Me.C1TrueDBGrid1.Splits(0).DisplayColumns("Importe").Visible = False
+        EstilizarColumnasCuenta()
         NumeroFactura = ""
         ActualizarEstadoPago()
 

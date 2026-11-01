@@ -121,6 +121,65 @@ Partial Class Form1
         txt.ForeColor = ColorTexto
     End Sub
 
+    '///////////////////////// GRID DE PRODUCTOS (mismo aspecto que el de frmCuentasCajero) //////////////////////
+    Private Sub EstilizarGridCuenta()
+        Dim Grid As C1.Win.C1TrueDBGrid.C1TrueDBGrid = Me.C1TrueDBGrid1
+        Dim Encabezado As Color = Color.FromArgb(52, 94, 152)
+
+        Grid.VisualStyle = C1.Win.C1TrueDBGrid.VisualStyle.Custom
+        Grid.BorderStyle = BorderStyle.None
+        Grid.BackColor = Color.White
+        Grid.ForeColor = Color.FromArgb(30, 41, 59)
+        Grid.Font = New Font("Segoe UI", 11.0!)
+        Grid.AlternatingRows = True
+        Grid.RecordSelectors = False
+        Grid.RowHeight = 30
+        Grid.ColumnHeaders = True
+        Grid.ExtendRightColumn = True
+        Grid.HeadingStyle.BackColor = Encabezado
+        Grid.HeadingStyle.ForeColor = Color.White
+        Grid.HeadingStyle.Font = New Font("Segoe UI Semibold", 11.0!, FontStyle.Bold)
+        Grid.HeadingStyle.VerticalAlignment = C1.Win.C1TrueDBGrid.AlignVertEnum.Center
+        Grid.Style.BackColor = Color.White
+        Grid.OddRowStyle.BackColor = Color.White
+        Grid.EvenRowStyle.BackColor = Color.FromArgb(222, 238, 250)
+
+        ' El grid estaba deshabilitado y la fila actual no se veia: se habilita (sigue sin permitir editar) y se resalta
+        Grid.Enabled = True
+        Grid.AllowUpdate = False
+        Grid.AllowAddNew = False
+        Grid.AllowDelete = False
+        Grid.AllowRowSelect = True
+        Grid.MarqueeStyle = C1.Win.C1TrueDBGrid.MarqueeEnum.HighlightRow
+        Grid.HighlightRowStyle.BackColor = Encabezado
+        Grid.HighlightRowStyle.ForeColor = Color.White
+        Grid.SelectedStyle.BackColor = Encabezado
+        Grid.SelectedStyle.ForeColor = Color.White
+        Grid.Style.VerticalAlignment = C1.Win.C1TrueDBGrid.AlignVertEnum.Center
+    End Sub
+
+    ''' <summary>Titulos y alineacion de las columnas; se aplica cada vez que se vuelve a enlazar el grid (BackToLife).</summary>
+    Private Sub EstilizarColumnasCuenta()
+        Try
+            Dim Grid As C1.Win.C1TrueDBGrid.C1TrueDBGrid = Me.C1TrueDBGrid1
+            Grid.Columns("Descripcion_Producto").Caption = "Producto"
+            Grid.Columns("Cantidad").Caption = "Cantidad"
+            Grid.Columns("Precio_Unitario").Caption = "Precio"
+            Grid.Columns("Precio_Neto").Caption = "Importe"
+            Grid.Splits(0).DisplayColumns("Cod_Producto").Visible = False
+
+            For Each Nombre As String In New String() {"Cantidad", "Precio_Unitario", "Precio_Neto"}
+                Grid.Splits(0).DisplayColumns(Nombre).Style.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+                Grid.Splits(0).DisplayColumns(Nombre).HeadingStyle.HorizontalAlignment = C1.Win.C1TrueDBGrid.AlignHorzEnum.Far
+            Next
+            Grid.Splits(0).DisplayColumns("Cantidad").Width = 90
+            Grid.Splits(0).DisplayColumns("Precio_Unitario").Width = 100
+            Grid.Splits(0).DisplayColumns("Precio_Neto").Width = 110
+        Catch
+            ' El aspecto no debe impedir cargar la cuenta
+        End Try
+    End Sub
+
     '///////////////////////// CONSTRUCCION DEL DISEÑO //////////////////////
     Private Sub ConstruirDiseno()
         Me.SuspendLayout()
@@ -192,6 +251,7 @@ Partial Class Form1
         Me.C1DockingTab1.Dock = DockStyle.Fill
         Me.C1DockingTab1.Margin = New Padding(0, 0, 0, 8)
         Me.C1TrueDBGrid1.Dock = DockStyle.Fill
+        EstilizarGridCuenta()
         For Each Caja As C1.Win.C1Input.C1TextBox In New C1.Win.C1Input.C1TextBox() {Me.txtNombre, Me.txtRuc, Me.txtTelefono, Me.txtDireccion, Me.txtObservacion}
             Caja.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         Next

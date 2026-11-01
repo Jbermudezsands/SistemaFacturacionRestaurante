@@ -47,11 +47,228 @@ OnMenuProject
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="M:OnMenuProject.Form1.MoverFilaCuenta(System.Int32)">
+ <summary>Mueve la fila actual del grid de productos y la deja visible y resaltada.</summary>
+</member>
+<member name="M:OnMenuProject.Form1.EstilizarColumnasCuenta">
+ <summary>Titulos y alineacion de las columnas; se aplica cada vez que se vuelve a enlazar el grid (BackToLife).</summary>
+</member>
 <member name="M:OnMenuProject.FormLog.InicializarConexiones">
  <summary>Lee la cadena de conexión desde el Access local y crea las conexiones globales.</summary>
 </member>
 <member name="M:OnMenuProject.FormLog.OcultarLogo">
  <summary>Sin logo no se reserva el espacio en la tarjeta.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoCalculadora">
+ <summary>
+ Cálculos del arqueo de caja. No accede a datos ni a controles, de modo que se puede probar de forma aislada.
+ Se usa Decimal y un redondeo único a 2 decimales (AwayFromZero) para evitar los errores de Double.
+ </summary>
+</member>
+<member name="M:OnMenuProject.ArqueoCalculadora.CalcularMonto(System.Decimal,System.Decimal)">
+ <summary>Monto de un renglón de denominaciones: valor del billete/moneda por la cantidad.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoCalculadora.ConvertirDolaresACordobas(System.Decimal,System.Decimal)">
+ <summary>Convierte dólares a córdobas. Se convierte el total, no cada renglón, para no acumular redondeos.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoImpresion">
+ <summary>Arma y muestra el reporte ArepArqueoCaja a partir de los datos del arqueo.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoMoneda">
+ <summary>Monedas que maneja el arqueo. Coinciden con el valor guardado en MetodoPago.Moneda.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoCabecera">
+ <summary>Encabezado de un arqueo (tabla Arqueo).</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoCabecera.TotalCordobasDolares">
+ <summary>Total contado en córdobas (efectivo + cheques/tarjetas, dólares convertidos). Nulo mientras no se ha grabado.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoCabecera.ValorFacturas">
+ <summary>Monto que debió recibirse según facturas y recibos. Nulo mientras no se ha grabado.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoCabecera.EfectivoEsperado">
+ <summary>Efectivo esperado y tasa capturados al iniciar el arqueo. Nulo en arqueos anteriores a esa captura.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoCabecera.EsEditable">
+ <summary>Un arqueo grabado ya no se modifica; solo uno iniciado y aún no grabado admite cambios.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoDenominacion">
+ <summary>Renglón del conteo de efectivo por denominación (tabla Detalle_Arqueo).</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoDenominacion.Monto">
+ <summary>Siempre se recalcula como Valor x Cantidad; no se confía en el monto digitado en pantalla.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoPagoDiferido">
+ <summary>Pago no efectivo (cheque, tarjeta, transferencia) de una factura o recibo pendiente de arquear.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoPagoDiferido.Documento">
+ <summary>Referencia que se guarda en Detalle_ArqueoCheque.NumeroFactura: "Fact" o "Rec" + número.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoEfectivoEsperado">
+ <summary>Efectivo que el sistema espera haber recibido del cajero (facturas y recibos pendientes de arquear).</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoEntradaCalculo">
+ <summary>Datos que alimentan el cálculo del arqueo.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoResumen">
+ <summary>Resultado del cálculo del arqueo. Todos los montos están redondeados a 2 decimales.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoResumen.TotalContado">
+ <summary>Total contado expresado en córdobas.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoResumen.TotalEsperado">
+ <summary>Total que debió recibirse en córdobas, incluyendo el fondo de apertura.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoResumen.Diferencia">
+ <summary>TotalEsperado - TotalContado. Positivo = faltante, negativo = sobrante.</summary>
+</member>
+<member name="P:OnMenuProject.ArqueoResumen.FaltaTasaCambio">
+ <summary>Hay montos en dólares y no existe tasa de cambio para la fecha: los totales no son confiables.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoEmpresa">
+ <summary>Datos de la empresa para el encabezado del reporte.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoRepositorio">
+ <summary>Acceso a datos del arqueo de caja. Todas las consultas son parametrizadas.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.ObtenerTasaCambio(System.DateTime)">
+ <summary>Tasa de cambio oficial de la fecha; 0 si no está registrada.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.ObtenerDetalleEfectivo(OnMenuProject.ArqueoCabecera,System.String)">
+ <summary>Conteo por denominación guardado. Columnas: idDenominacion, Valor, Canitdad, Monto (nombre de columna heredado de la BD).</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.ObtenerDetalleCheques(OnMenuProject.ArqueoCabecera,System.String)">
+ <summary>Cheques/tarjetas guardados en el arqueo. Columnas: Factura#/Recibo#, NombrePago, Tarjeta#/Cheque#, Monto.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.SumarEfectivoFacturas(System.String,System.DateTime,System.String)">
+ <summary>Efectivo de facturas del cajero en el día, aún no arqueado (consulta previa, sin marcar).</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.SumarEfectivoRecibos(System.String,System.DateTime,System.String)">
+ <summary>Efectivo de recibos del cajero en el día, aún no arqueado (consulta previa, sin marcar).</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.ObtenerPagosDiferidosPendientes(System.String,System.DateTime)">
+ <summary>Pagos no efectivo (cheque, tarjeta...) de facturas y recibos pendientes hasta la fecha del arqueo, inclusive.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.CrearArqueo(OnMenuProject.ArqueoCabecera,System.Collections.Generic.IEnumerable{OnMenuProject.ArqueoDenominacion},System.Collections.Generic.IEnumerable{OnMenuProject.ArqueoPagoDiferido})">
+ <summary>
+ Crea el arqueo completo en una sola transacción: captura y marca el efectivo esperado, encabezado,
+ renglones de denominaciones en cero, detalle de cheques/tarjetas y marca de "arqueado" en los pagos incluidos.
+ cab.EfectivoEsperado debe traer la tasa de cambio; los montos se calculan dentro de la transacción.
+ </summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.GuardarArqueo(OnMenuProject.ArqueoCabecera,System.Collections.Generic.IEnumerable{OnMenuProject.ArqueoDenominacion})">
+ <summary>Graba el cierre del arqueo: conteo por denominación y totales del encabezado.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.CapturarEfectivoEsperado(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,OnMenuProject.ArqueoCabecera)">
+ <summary>
+ Suma el efectivo pendiente del cajero en el día y lo marca como arqueado, en la misma transacción,
+ para que otro arqueo del mismo cajero y día no lo cuente de nuevo.
+ </summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.MarcarComoArqueado(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,OnMenuProject.ArqueoPagoDiferido)">
+ <summary>Marca como arqueado solo el pago incluido (documento, fecha y forma de pago), no todo el documento.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoRepositorio.AgregarDecimal(System.Data.SqlClient.SqlCommand,System.String,System.Decimal)">
+ <summary>Un parámetro Decimal sin precisión/escala trunca los centavos; se fija explícitamente.</summary>
+</member>
+<member name="T:OnMenuProject.ArqueoServicio">
+ <summary>Reglas de negocio y validaciones del arqueo de caja. Los formularios solo hablan con esta clase.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoServicio.IniciarArqueo(System.String,System.DateTime,System.Decimal)">
+ <summary>
+ Inicia un arqueo: toma los cheques/tarjetas pendientes del cajero, crea las denominaciones en cero
+ y marca los pagos incluidos como arqueados, todo en una transacción.
+ </summary>
+</member>
+<member name="M:OnMenuProject.ArqueoServicio.ObtenerEfectivoEsperado(OnMenuProject.ArqueoCabecera)">
+ <summary>Efectivo esperado de un arqueo: el capturado al iniciarlo; si es anterior a esa captura, se calcula en vivo.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoServicio.ObtenerEfectivoEsperado(System.String,System.DateTime)">
+ <summary>Efectivo de facturas y recibos que el cajero debió recaudar, y la tasa de cambio de la fecha.</summary>
+</member>
+<member name="M:OnMenuProject.ArqueoServicio.Guardar(OnMenuProject.ArqueoCabecera,OnMenuProject.ArqueoEfectivoEsperado,System.Data.DataTable,System.Data.DataTable,System.Data.DataTable,System.Data.DataTable,System.String,System.String)">
+ <summary>Graba el conteo y los totales. El monto de cada renglón se recalcula; no se toma del grid.</summary>
+</member>
+<member name="T:OnMenuProject.FrmArqueo">
+ <summary>
+ Arqueo de caja. El formulario solo maneja la pantalla; las reglas, los cálculos y el acceso a datos
+ están en ArqueoServicio, ArqueoCalculadora y ArqueoRepositorio (carpeta Clases\Arqueo).
+ </summary>
+</member>
+<member name="M:OnMenuProject.FrmArqueo.GridEfectivo_AfterColUpdate(System.Object,C1.Win.C1TrueDBGrid.ColEventArgs)">
+ <summary>Al digitar la cantidad de una denominación se recalcula el monto del renglón y los totales.</summary>
+</member>
+<member name="M:OnMenuProject.FrmArqueo.AplicarEstado">
+ <summary>Habilita o bloquea los controles según haya un arqueo abierto y si este aún admite cambios.</summary>
+</member>
+<member name="M:OnMenuProject.FrmArqueo.EstilizarGrid(C1.Win.C1TrueDBGrid.C1TrueDBGrid)">
+ <summary>Aplica a los grids de ComponentOne la misma paleta del resto del diseño.</summary>
+</member>
+<member name="T:OnMenuProject.FrmBuscarArqueo">
+ <summary>Lista los arqueos registrados para abrir uno desde FrmArqueo.</summary>
+</member>
+<member name="F:OnMenuProject.FrmBuscarArqueo.CodigoSeleccionado">
+ <summary>Codigo del arqueo elegido; vacio si se cancela.</summary>
+</member>
+<member name="T:OnMenuProject.frmClavesVendedor">
+ <summary>El administrador cambia el nombre y la contraseña de cualquier vendedor. Una contraseña vacía se guarda como Null.</summary>
+</member>
+<member name="T:OnMenuProject.frmCuentasCajero">
+ <summary>
+ Cuentas abiertas de todas las mesas para el cajero: ver el detalle, imprimir prefacturas, cobrar y cerrar cuentas.
+ El cajero no toma pedidos: aqui no se agregan ni se quitan productos.
+ </summary>
+</member>
+<member name="M:OnMenuProject.frmCuentasCajero.CargarCuentasAbiertas">
+ <summary>Cuentas en curso de todo el restaurante (las mismas que ocupan las mesas en FormCuentas).</summary>
+</member>
+<member name="M:OnMenuProject.frmCuentasCajero.CambioPropinaIva(System.Object,System.EventArgs)">
+ <summary>Quita o pone propina e IVA y regraba los totales de la cuenta, con las mismas reglas de Form1.Calcular.</summary>
+</member>
+<member name="M:OnMenuProject.frmCuentasCajero.ArmarReporte(System.String,System.Decimal)">
+ <summary>Arma el reporte de tira (proforma o factura) de la cuenta seleccionada con sus datos guardados.</summary>
+</member>
+<member name="T:OnMenuProject.frmImpresoras">
+ <summary>Impresora que usa cada documento del sistema (misma configuracion Impresoras.dll que el Manager).</summary>
+</member>
+<member name="T:OnMenuProject.frmMetodoPago">
+ <summary>Catalogo de metodos de pago (tabla MetodoPago): agregar, modificar y eliminar los que no se han usado en facturas.</summary>
+</member>
+<member name="M:OnMenuProject.frmMetodoPago.EstaEnUso(System.String)">
+ <summary>Un metodo esta en uso cuando alguna factura tiene un pago registrado con ese nombre.</summary>
+</member>
+<member name="T:OnMenuProject.frmOpcionesAdministrador">
+ <summary>Menu del administrador: impresoras y metodos de pago.</summary>
+</member>
+<member name="T:OnMenuProject.frmOpcionesCajero">
+ <summary>Menu del cajero: cuentas de mesas, arqueo de caja y metodos de pago.</summary>
+</member>
+<member name="T:OnMenuProject.EstiloCaja">
+ <summary>
+ Paleta y controles compartidos por las pantallas de Cajero y Administrador.
+ Usa los mismos colores de FormLog y FormCuentas.
+ </summary>
+</member>
+<member name="M:OnMenuProject.EstiloCaja.CajaBoton(System.String,System.Boolean)">
+ <summary>Boton plano: primario (azul) o secundario (claro con borde).</summary>
+</member>
+<member name="M:OnMenuProject.EstiloCaja.CajaMarcarFiltro(System.Windows.Forms.Button,System.Boolean)">
+ <summary>Aplica el aspecto de boton seleccionado o normal a un boton de filtro.</summary>
+</member>
+<member name="M:OnMenuProject.EstiloCaja.CajaTarjeta">
+ <summary>Panel blanco que agrupa una seccion sobre el fondo azul oscuro.</summary>
+</member>
+<member name="M:OnMenuProject.EstiloCaja.CajaEncabezado(System.String,System.String)">
+ <summary>Encabezado de pantalla: titulo y subtitulo en blanco sobre el fondo oscuro. El boton de salida lo agrega cada formulario.</summary>
+</member>
+<member name="M:OnMenuProject.EstiloCaja.CajaIcono(System.String)">
+ <summary>Icono lineal dibujado en codigo (cuentas, arqueo, metodos, impresoras) con el azul primario.</summary>
+</member>
+<member name="M:OnMenuProject.EstiloCaja.CajaOpcion(System.String,System.String,System.String)">
+ <summary>Boton grande de menu: icono arriba, titulo y descripcion corta sobre fondo blanco.</summary>
+</member>
+<member name="M:OnMenuProject.Funciones.GuardaImpresora(System.String,System.String)">
+ <summary>Guarda en Impresoras.dll la impresora de un modulo (Factura, Recibo, Comanda, ComandaBar). Si el modulo no existe lo agrega.</summary>
 </member>
 </members>
 </doc>

@@ -9,6 +9,8 @@ Module Globales
     Public TempConn As New SqlConnection("Password=P@ssword;Persist Security Info=True;User ID=sa;Initial Catalog=FacturacionFincaSantaClara;Data Source=DESKTOP-E2SQPU1\SQL2005")
     Public PUsuario, PBodega, PCliente, PVendedor, PCajero As String
     Public Version As String, Quien As String
+    ' Perfil del usuario que inicio sesion: Mesero, Cajero o Administrador (vendedores.Tipo)
+    Public TipoUsuario As String = "Mesero"
 
 
 End Module

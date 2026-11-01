@@ -76,3 +76,7 @@ D:\Sistemas\Sistema Facturacion Restaurante\Sistema Facturacion Restaurante\Menu
 C:\Users\jberm\AppData\Local\Temp\claude\D--Sistemas-Sistema-Facturacion-Restaurante\547817e7-c2c1-4489-982f-52b9c2303590\scratchpad\out\OnMenuProject.exe
 C:\Users\jberm\AppData\Local\Temp\claude\D--Sistemas-Sistema-Facturacion-Restaurante\547817e7-c2c1-4489-982f-52b9c2303590\scratchpad\out\OnMenuProject.pdb
 C:\Users\jberm\AppData\Local\Temp\claude\D--Sistemas-Sistema-Facturacion-Restaurante\547817e7-c2c1-4489-982f-52b9c2303590\scratchpad\out\OnMenuProject.xml
+D:\Sistemas\Sistema Facturacion Restaurante\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.FrmArqueo.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.ArepArqueoCaja.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.ArepDenominacion.resources
+D:\Sistemas\Sistema Facturacion Restaurante\Sistema Facturacion Restaurante\Menu Software\OnMenuProject\obj\Debug\OnMenuProject.ArepDetalleCheque.resources

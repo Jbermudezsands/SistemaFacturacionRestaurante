@@ -148,6 +148,78 @@
     <Compile Include="FrmViewer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Clases\Arqueo\ArqueoCalculadora.vb" />
+    <Compile Include="Clases\Arqueo\ArqueoImpresion.vb" />
+    <Compile Include="Clases\Arqueo\ArqueoModelos.vb" />
+    <Compile Include="Clases\Arqueo\ArqueoRepositorio.vb" />
+    <Compile Include="Clases\Arqueo\ArqueoServicio.vb" />
+    <Compile Include="FrmArqueo.Designer.vb">
+      <DependentUpon>FrmArqueo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmArqueo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBuscarArqueo.Designer.vb">
+      <DependentUpon>FrmBuscarArqueo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmBuscarArqueo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClavesVendedor.Designer.vb">
+      <DependentUpon>frmClavesVendedor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmClavesVendedor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCuentasCajero.Designer.vb">
+      <DependentUpon>frmCuentasCajero.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCuentasCajero.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImpresoras.Designer.vb">
+      <DependentUpon>frmImpresoras.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImpresoras.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMetodoPago.Designer.vb">
+      <DependentUpon>frmMetodoPago.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMetodoPago.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOpcionesAdministrador.Designer.vb">
+      <DependentUpon>frmOpcionesAdministrador.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOpcionesAdministrador.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOpcionesCajero.Designer.vb">
+      <DependentUpon>frmOpcionesCajero.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOpcionesCajero.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modulos\EstiloCaja.vb" />
+    <Compile Include="Reportes\ArepArqueoCaja.Designer.vb">
+      <DependentUpon>ArepArqueoCaja.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ArepArqueoCaja.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ArepDenominacion.Designer.vb">
+      <DependentUpon>ArepDenominacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ArepDenominacion.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ArepDetalleCheque.Designer.vb">
+      <DependentUpon>ArepDetalleCheque.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ArepDetalleCheque.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Funciones.vb" />
     <Compile Include="Globales.vb" />
     <Compile Include="Modulos\Conversion.vb" />
@@ -223,6 +295,22 @@
     <EmbeddedResource Include="FrmViewer.resx">
       <DependentUpon>FrmViewer.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmArqueo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FrmArqueo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ArepArqueoCaja.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ArepArqueoCaja.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ArepDenominacion.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ArepDenominacion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ArepDetalleCheque.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ArepDetalleCheque.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">

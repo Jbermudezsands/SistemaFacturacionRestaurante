@@ -150,14 +150,14 @@ Public Class FormLog
     End Sub
 
     Private Sub IniciarSesion()
-        If Me.cboMesero.SelectedValue Is Nothing OrElse Me.txtContraseña.Text = "" Then
+        If Me.cboMesero.SelectedValue Is Nothing Then
             MessageBox.Show("Tenés que completar los datos para Acceder", TituloMensaje, MessageBoxButtons.OK, MessageBoxIcon.Hand)
             Return
         End If
 
         Dim Credencial As New DataTable
         Try
-            Using Adapter As New SqlDataAdapter("Select top(1) Contraseña from vendedores Where Cod_Vendedor = @Codigo", TempConn)
+            Using Adapter As New SqlDataAdapter("Select top(1) * from vendedores Where Cod_Vendedor = @Codigo", TempConn)
                 Adapter.SelectCommand.Parameters.AddWithValue("@Codigo", Me.cboMesero.SelectedValue)
                 Adapter.Fill(Credencial)
             End Using
@@ -171,7 +171,17 @@ Public Class FormLog
             Return
         End If
 
-        If Me.txtContraseña.Text <> Convert.ToString(Credencial.Rows(0)("Contraseña")) Then
+        '/////// Un Administrador sin contraseña (Null o vacia) entra solo con Aceptar ///////
+        Dim ClaveVacia As Boolean = IsDBNull(Credencial.Rows(0)("Contraseña")) OrElse Convert.ToString(Credencial.Rows(0)("Contraseña")) = ""
+        Dim EsAdministrador As Boolean = Credencial.Columns.Contains("Tipo") AndAlso Not IsDBNull(Credencial.Rows(0)("Tipo")) AndAlso String.Equals(Convert.ToString(Credencial.Rows(0)("Tipo")).Trim(), "Administrador", StringComparison.OrdinalIgnoreCase)
+        Dim SinClave As Boolean = EsAdministrador AndAlso ClaveVacia AndAlso Me.txtContraseña.Text = ""
+
+        If Not SinClave AndAlso Me.txtContraseña.Text = "" Then
+            MessageBox.Show("Tenés que completar los datos para Acceder", TituloMensaje, MessageBoxButtons.OK, MessageBoxIcon.Hand)
+            Return
+        End If
+
+        If Not SinClave AndAlso Me.txtContraseña.Text <> Convert.ToString(Credencial.Rows(0)("Contraseña")) Then
             MessageBox.Show("La Contraseña es incorrecta", TituloMensaje, MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.txtContraseña.SelectAll()
             Me.txtContraseña.Focus()
@@ -180,7 +190,20 @@ Public Class FormLog
 
         Form1.CodVendedor = Me.cboMesero.SelectedValue
         Form1.NombreVendedor = Me.cboMesero.Text
-        FormCuentas.Show()
+
+        '/////// El Tipo de vendedor define la pantalla de inicio (Null o Mesero: mesas y comandas) ///////
+        TipoUsuario = "Mesero"
+        If Credencial.Columns.Contains("Tipo") AndAlso Not IsDBNull(Credencial.Rows(0)("Tipo")) Then
+            If Convert.ToString(Credencial.Rows(0)("Tipo")).Trim() <> "" Then TipoUsuario = Convert.ToString(Credencial.Rows(0)("Tipo")).Trim()
+        End If
+
+        If String.Equals(TipoUsuario, "Cajero", StringComparison.OrdinalIgnoreCase) Then
+            frmOpcionesCajero.Show()
+        ElseIf String.Equals(TipoUsuario, "Administrador", StringComparison.OrdinalIgnoreCase) Then
+            frmOpcionesAdministrador.Show()
+        Else
+            FormCuentas.Show()
+        End If
         Me.Close()
     End Sub
 
