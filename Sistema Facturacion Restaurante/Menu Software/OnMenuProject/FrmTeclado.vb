@@ -1,6 +1,8 @@
 Public Class FrmTeclado
     Public EscrituraTeclado As String = ""
     Public Posicion As String
+    ' Posicion = "Externo": el teclado edita este cuadro de texto (formularios distintos de Form1)
+    Public Destino As TextBox
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ConstruirDiseno()
@@ -16,6 +18,9 @@ Public Class FrmTeclado
                 Me.TxtCadena.Text = Form1.txtDireccion.Text
             Case "Observacion" : Me.Location = New Point(190, 299)
                 Me.TxtCadena.Text = Form1.txtObservacion.Text
+            Case "Externo" : Me.TxtCadena.Text = Destino.Text
+                Dim Area As Rectangle = Screen.FromControl(Destino).WorkingArea
+                Me.Location = New Point(Area.Left + (Area.Width - Me.Width) \ 2, Area.Top + (Area.Height - Me.Height) \ 2)
         End Select
         Me.TxtCadena.Focus()
     End Sub
@@ -597,6 +602,7 @@ Public Class FrmTeclado
             Case "Telefono" : My.Forms.Form1.txtTelefono.Text = EscrituraTeclado
             Case "Direccion" : My.Forms.Form1.txtDireccion.Text = EscrituraTeclado
             Case "Observacion" : My.Forms.Form1.txtObservacion.Text = EscrituraTeclado
+            Case "Externo" : Destino.Text = EscrituraTeclado
         End Select
         Me.Close()
        
@@ -612,6 +618,7 @@ Public Class FrmTeclado
                 Case "Telefono" : My.Forms.Form1.txtTelefono.Text = EscrituraTeclado
                 Case "Direccion" : My.Forms.Form1.txtDireccion.Text = EscrituraTeclado
                 Case "Observacion" : My.Forms.Form1.txtObservacion.Text = EscrituraTeclado
+            Case "Externo" : Destino.Text = EscrituraTeclado
             End Select
             Me.Close()
 

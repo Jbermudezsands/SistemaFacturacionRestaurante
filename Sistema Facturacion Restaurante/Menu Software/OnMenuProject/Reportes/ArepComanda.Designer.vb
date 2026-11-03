@@ -33,6 +33,7 @@ Partial Public Class ArepComanda
         Me.Label18 = New DataDynamics.ActiveReports.Label
         Me.Label23 = New DataDynamics.ActiveReports.Label
         Me.Label15 = New DataDynamics.ActiveReports.Label
+        Me.LblImpresion = New DataDynamics.ActiveReports.Label
         Me.txtCodigo = New DataDynamics.ActiveReports.TextBox
         Me.txtDescripcion = New DataDynamics.ActiveReports.TextBox
         Me.txtCantidad = New DataDynamics.ActiveReports.TextBox
@@ -48,6 +49,7 @@ Partial Public Class ArepComanda
         CType(Me.Label18, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Label23, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Label15, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LblImpresion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtCodigo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtDescripcion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtCantidad, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,8 +70,18 @@ Partial Public Class ArepComanda
         '
         'PageFooter1
         '
-        Me.PageFooter1.Height = 0.0!
+        Me.PageFooter1.Controls.AddRange(New DataDynamics.ActiveReports.ARControl() {Me.LblImpresion})
+        Me.PageFooter1.Height = 0.25!
         Me.PageFooter1.Name = "PageFooter1"
+        '
+        'LblImpresion
+        '
+        Me.LblImpresion.Border.BottomColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.BottomStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+         Me.LblImpresion.Border.LeftColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.LeftStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+         Me.LblImpresion.Border.RightColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.RightStyle = DataDynamics.ActiveReports.BorderLineStyle.None
         '
         'Label6
         '
@@ -394,6 +406,7 @@ Partial Public Class ArepComanda
         CType(Me.Label18, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Label23, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Label15, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LblImpresion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtCodigo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtDescripcion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtCantidad, System.ComponentModel.ISupportInitialize).EndInit()
@@ -412,6 +425,7 @@ Partial Public Class ArepComanda
     Friend WithEvents Label18 As DataDynamics.ActiveReports.Label
     Friend WithEvents Label23 As DataDynamics.ActiveReports.Label
     Friend WithEvents Label15 As DataDynamics.ActiveReports.Label
+    Friend WithEvents LblImpresion As DataDynamics.ActiveReports.Label
     Friend WithEvents txtCodigo As DataDynamics.ActiveReports.TextBox
     Friend WithEvents txtDescripcion As DataDynamics.ActiveReports.TextBox
     Friend WithEvents txtCantidad As DataDynamics.ActiveReports.TextBox

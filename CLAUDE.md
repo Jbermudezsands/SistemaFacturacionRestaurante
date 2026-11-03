@@ -86,3 +86,17 @@ Password=P@ssword;Persist Security Info=True;User ID=sa;Initial Catalog=SistemaR
 - Al agregar un archivo nuevo, hay que incluirlo en `OnMenuProject.vbproj` (`<Compile Include=...>`), ya que es un proyecto de formato antiguo con lista explícita de archivos.
 - Compatibilidad: solo sintaxis y APIs disponibles en **.NET Framework 4.0** (sin `async/await` nativo, sin `String interpolation $""`, sin `?.`).
 - Seguridad: no commitear contraseñas ni cadenas de conexión reales de clientes.
+
+## Scripts SQL (guardado de cambios)
+
+Cuando te pida **guardar un Script de SQL**, guárdalo siempre en el proyecto **SistemaFacturacion-6.0**, no en este repositorio:
+
+```
+D:\Sistemas\SistemaFacturacion-6.0\Cambios Script\Año <AAAA>\<N>.<Mes>\<K>.<Nombre>.sql
+```
+
+- Dentro de `Cambios Script` hay una carpeta por año: `Año 2025`, `Año 2026`, etc. (las más antiguas no siguen el formato; usa la del año actual, créala si no existe).
+- Dentro de cada año, una carpeta por mes numerada según el mes calendario en que se hace el script: `1.Enero`, `2.Febrero`, `3.Marzo`, ..., `10. Octubre`, `11.Noviembre`, `12.Diciembre`. Si la carpeta del mes no existe, créala con ese formato.
+- Dentro de cada mes, los scripts se numeran de forma **incremental** para indicar el orden de los cambios: `1.xxxxx.sql`, `2.yyyy.sql`, ... El nuevo script lleva el siguiente número libre (revisa la carpeta del mes y toma el mayor número existente + 1; si está vacía, empieza en 1).
+- El nombre después del número describe el cambio (tabla o tema), p. ej. `14.Productor Precio_Transportista.sql`.
+- Antes de crear el archivo, lista la carpeta del mes para calcular el número y evitar sobrescribir.

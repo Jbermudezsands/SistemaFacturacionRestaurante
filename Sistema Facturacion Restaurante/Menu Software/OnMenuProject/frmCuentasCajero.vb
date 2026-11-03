@@ -23,6 +23,11 @@ Public Class frmCuentasCajero
     Private FotosMesa As New Dictionary(Of String, String)
     Private Shared CacheImagenes As New Dictionary(Of String, Image)
     Private Cargando As Boolean = False
+    Private Const IntervaloActualizacion As Integer = 5000
+    Private Const SqlCuentasAbiertas As String = "SELECT Numero_Factura, Tipo_Factura, Fecha_Factura, Cod_Cliente, Cod_Vendedor, Nombre_Cliente, NetoPagar " &
+                                                 "FROM Facturas WHERE Activo = 1 AND Cancelado = 0 ORDER BY Cod_Cliente, Numero_Factura"
+    Private FirmaAbiertas As String = ""
+    Private WithEvents TmrActualizar As New Timer
     Private ChkPropina As CheckBox
     Private ChkExonerar As CheckBox
 
@@ -42,6 +47,7 @@ Public Class frmCuentasCajero
     Private WithEvents BtnActualizar As Button
     Private WithEvents BtnSalir As Button
     Private WithEvents BtnPreFactura As Button
+    Private WithEvents BtnDatos As Button
     Private WithEvents BtnPago As Button
     Private WithEvents BtnCerrarCuenta As Button
 
@@ -53,6 +59,8 @@ Public Class frmCuentasCajero
             CargarCuentasAbiertas()
             RefrescarMesas()
             LimpiarDetalle()
+            TmrActualizar.Interval = IntervaloActualizacion
+            TmrActualizar.Start()
         Catch ex As Exception
             MessageBox.Show("No se pudieron cargar las cuentas." & vbCrLf & ex.Message, Titulo, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -197,8 +205,11 @@ Public Class frmCuentasCajero
         BtnPreFactura.Size = New Size(130, 46)
         BtnPago = CajaBoton("Pago", True)
         BtnPago.Size = New Size(130, 46)
+        BtnDatos = CajaBoton("Datos", False)
+        BtnDatos.Size = New Size(110, 46)
         BtnCerrarCuenta = CajaBoton("Cerrar cuenta", True)
         BtnCerrarCuenta.Size = New Size(160, 46)
+        Acciones.Controls.Add(BtnDatos)
         Acciones.Controls.Add(BtnPreFactura)
         Acciones.Controls.Add(BtnPago)
         Acciones.Controls.Add(BtnCerrarCuenta)
@@ -305,9 +316,18 @@ Public Class frmCuentasCajero
 
     ''' <summary>Cuentas en curso de todo el restaurante (las mismas que ocupan las mesas en FormCuentas).</summary>
     Private Sub CargarCuentasAbiertas()
-        TablaAbiertas = Consultar("SELECT Numero_Factura, Tipo_Factura, Fecha_Factura, Cod_Cliente, Cod_Vendedor, Nombre_Cliente, NetoPagar " &
-                                  "FROM Facturas WHERE Activo = 1 AND Cancelado = 0 ORDER BY Cod_Cliente, Numero_Factura")
+        TablaAbiertas = Consultar(SqlCuentasAbiertas)
+        FirmaAbiertas = FirmaDe(TablaAbiertas)
     End Sub
+
+    ''' <summary>Huella de las cuentas abiertas: cambia cuando se abre, se cierra o se modifica alguna.</summary>
+    Private Shared Function FirmaDe(ByVal Tabla As DataTable) As String
+        Dim Firma As New System.Text.StringBuilder
+        For Each Fila As DataRow In Tabla.Rows
+            Firma.Append(Fila("Numero_Factura").ToString()).Append("|").Append(Fila("Cod_Cliente").ToString()).Append("|").Append(Fila("Cod_Vendedor").ToString()).Append("|").Append(Fila("NetoPagar").ToString()).Append(";")
+        Next
+        Return Firma.ToString()
+    End Function
 
     Private Function CuentaVisible(ByVal Fila As DataRow) As Boolean
         Return SelVendedor = "" OrElse Fila("Cod_Vendedor").ToString() = SelVendedor
@@ -511,6 +531,7 @@ Public Class frmCuentasCajero
         Cargando = False
         ChkPropina.Enabled = False
         ChkExonerar.Enabled = False
+        BtnDatos.Enabled = False
         BtnPreFactura.Enabled = False
         BtnPago.Enabled = False
         BtnCerrarCuenta.Enabled = False
@@ -568,6 +589,7 @@ Public Class frmCuentasCajero
             ChkExonerar.Enabled = True
 
             ' Igual que Form1: cerrar la cuenta se habilita al imprimir la prefactura o al aplicar pagos
+            BtnDatos.Enabled = True
             BtnPreFactura.Enabled = True
             BtnPago.Enabled = True
             BtnCerrarCuenta.Enabled = Pagado > 0D OrElse PrefacturaImpresa.Contains(SelNumero)
@@ -673,6 +695,65 @@ Public Class frmCuentasCajero
 #End Region
 
 #Region "Acciones"
+
+    ' Cuando un mesero abre o cierra cuentas la pantalla se pone al dia sola, conservando el mesero, la mesa y la cuenta elegidos
+    Private Sub TmrActualizar_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles TmrActualizar.Tick
+        ' No se redibuja mientras hay otra ventana encima (cobro, datos del cliente, visor)
+        If Form.ActiveForm IsNot Me Then Return
+
+        Try
+            If FirmaDe(Consultar(SqlCuentasAbiertas)) <> FirmaAbiertas Then ActualizarTodo()
+        Catch
+            ' Sin conexion en este instante: se reintenta en el siguiente ciclo
+        End Try
+    End Sub
+
+    Private Sub frmCuentasCajero_FormClosed(ByVal sender As Object, ByVal e As FormClosedEventArgs) Handles Me.FormClosed
+        TmrActualizar.Stop()
+        TmrActualizar.Dispose()
+    End Sub
+
+    ' Nombre, RUC, telefono y direccion del cliente: se guardan en la cuenta y salen en la factura
+    Private Sub BtnDatos_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BtnDatos.Click
+        If SelNumero = "" Then Return
+
+        Try
+            Dim Cab As DataTable = Consultar("SELECT Nombre_Cliente, Apellido_Cliente, Telefono_Cliente, Direccion_Cliente FROM Facturas WHERE Numero_Factura = @Numero AND Tipo_Factura = @Tipo AND Activo = 1 AND Cancelado = 0",
+                                            New SqlParameter("@Numero", SelNumero), New SqlParameter("@Tipo", SelTipo))
+            If Cab.Rows.Count = 0 Then
+                MessageBox.Show("La cuenta " & SelNumero & " ya no está abierta.", Titulo, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ActualizarTodo()
+                Return
+            End If
+
+            Using Datos As New FrmDatosCliente(SelNumero)
+                Datos.Nombre = Cab.Rows(0)("Nombre_Cliente").ToString()
+                Datos.Ruc = Cab.Rows(0)("Apellido_Cliente").ToString()
+                Datos.Telefono = Cab.Rows(0)("Telefono_Cliente").ToString()
+                Datos.Direccion = Cab.Rows(0)("Direccion_Cliente").ToString()
+                If Datos.ShowDialog(Me) <> DialogResult.OK Then Return
+
+                ' Como en Form1: el RUC se guarda en Apellido_Cliente
+                Using cn As New SqlConnection(Conexion)
+                    Using cmd As New SqlCommand("UPDATE Facturas SET Nombre_Cliente = @Nombre, Apellido_Cliente = @Ruc, Telefono_Cliente = @Telefono, Direccion_Cliente = @Direccion " &
+                                                "WHERE Numero_Factura = @Numero AND Tipo_Factura = @Tipo", cn)
+                        cmd.Parameters.AddWithValue("@Nombre", Datos.Nombre)
+                        cmd.Parameters.AddWithValue("@Ruc", Datos.Ruc)
+                        cmd.Parameters.AddWithValue("@Telefono", Datos.Telefono)
+                        cmd.Parameters.AddWithValue("@Direccion", Datos.Direccion)
+                        cmd.Parameters.AddWithValue("@Numero", SelNumero)
+                        cmd.Parameters.AddWithValue("@Tipo", SelTipo)
+                        cn.Open()
+                        cmd.ExecuteNonQuery()
+                    End Using
+                End Using
+            End Using
+
+            ActualizarTodo()
+        Catch ex As Exception
+            MessageBox.Show("No se pudieron guardar los datos del cliente." & vbCrLf & ex.Message, Titulo, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 
     Private Sub BtnActualizar_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BtnActualizar.Click
         Try

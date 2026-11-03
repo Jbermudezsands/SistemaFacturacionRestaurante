@@ -86,6 +86,17 @@
       <DependentUpon>FrmTecladoNumerico.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form1.Sincronizacion.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCuentas.Actualizacion.vb">
+      <DependentUpon>FormCuentas.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDatosCliente.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.Diseno.vb">
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>

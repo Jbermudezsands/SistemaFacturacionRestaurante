@@ -64,6 +64,7 @@ Partial Public Class ArepFacturasTiras2
         Me.LblTotal1 = New DataDynamics.ActiveReports.Label()
         Me.Label4 = New DataDynamics.ActiveReports.Label()
         Me.LblNota = New DataDynamics.ActiveReports.Label()
+        Me.LblImpresion = New DataDynamics.ActiveReports.Label()
         Me.Label8 = New DataDynamics.ActiveReports.Label()
         Me.Label9 = New DataDynamics.ActiveReports.Label()
         Me.Label10 = New DataDynamics.ActiveReports.Label()
@@ -109,6 +110,7 @@ Partial Public Class ArepFacturasTiras2
         CType(Me.LblTotal1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Label4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LblNota, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LblImpresion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Label8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Label9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Label10, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -614,8 +616,8 @@ Partial Public Class ArepFacturasTiras2
         '
         'ReportFooter1
         '
-        Me.ReportFooter1.Controls.AddRange(New DataDynamics.ActiveReports.ARControl() {Me.lblSubTotals, Me.LblSubTotal, Me.Label3, Me.LblPagado, Me.LblTotal, Me.lblGrandTotal, Me.Simbolo1, Me.Simbolo3, Me.Simbolo4, Me.lblFreight, Me.Simbolo2, Me.LblIva, Me.Label2, Me.Simbolo5, Me.LblTotal1, Me.Label4, Me.LblNota, Me.Label8, Me.Label9, Me.Label10})
-        Me.ReportFooter1.Height = 2.354167!
+        Me.ReportFooter1.Controls.AddRange(New DataDynamics.ActiveReports.ARControl() {Me.lblSubTotals, Me.LblSubTotal, Me.Label3, Me.LblPagado, Me.LblTotal, Me.lblGrandTotal, Me.Simbolo1, Me.Simbolo3, Me.Simbolo4, Me.lblFreight, Me.Simbolo2, Me.LblIva, Me.Label2, Me.Simbolo5, Me.LblTotal1, Me.Label4, Me.LblNota, Me.LblImpresion, Me.Label8, Me.Label9, Me.Label10})
+        Me.ReportFooter1.Height = 2.375!
         Me.ReportFooter1.Name = "ReportFooter1"
         '
         'lblSubTotals
@@ -958,6 +960,15 @@ Partial Public Class ArepFacturasTiras2
         Me.LblNota.Visible = False
         Me.LblNota.Width = 2.375!
         '
+        'LblImpresion
+        '
+        Me.LblImpresion.Border.BottomColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.BottomStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+         Me.LblImpresion.Border.LeftColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.LeftStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+         Me.LblImpresion.Border.RightColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.RightStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        '
         'Label8
         '
         Me.Label8.Border.BottomColor = System.Drawing.Color.Black
@@ -1100,6 +1111,7 @@ Partial Public Class ArepFacturasTiras2
         CType(Me.LblTotal1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Label4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LblNota, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LblImpresion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Label8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Label9, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Label10, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1150,6 +1162,7 @@ Partial Public Class ArepFacturasTiras2
     Friend WithEvents Label7 As DataDynamics.ActiveReports.Label
     Friend WithEvents LblApellidos As DataDynamics.ActiveReports.Label
     Friend WithEvents LblNota As DataDynamics.ActiveReports.Label
+    Friend WithEvents LblImpresion As DataDynamics.ActiveReports.Label
     Friend WithEvents Label8 As DataDynamics.ActiveReports.Label
     Friend WithEvents Label9 As DataDynamics.ActiveReports.Label
     Friend WithEvents Label10 As DataDynamics.ActiveReports.Label

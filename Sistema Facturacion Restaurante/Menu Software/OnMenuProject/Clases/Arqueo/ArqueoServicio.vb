@@ -17,6 +17,10 @@ Public Class ArqueoServicio
         Return _repositorio.ObtenerCajeros()
     End Function
 
+    Public Function ObtenerCodCajeroDeVendedor(ByVal codVendedor As String) As String
+        Return _repositorio.ObtenerCodCajeroDeVendedor(codVendedor)
+    End Function
+
     Public Function ObtenerEmpresa() As ArqueoEmpresa
         Return _repositorio.ObtenerEmpresa()
     End Function

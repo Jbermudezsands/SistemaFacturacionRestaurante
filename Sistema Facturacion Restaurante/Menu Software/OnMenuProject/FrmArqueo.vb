@@ -23,6 +23,7 @@ Public Class FrmArqueo
     Private _chequesDolares As DataTable
 
     Private _cargando As Boolean
+    Private _cajeroPredeterminado As String = String.Empty
     Private _permiteGrabar As Boolean = True
     Private _permiteImprimir As Boolean = True
 
@@ -46,6 +47,9 @@ Public Class FrmArqueo
         Try
             _servicio = New ArqueoServicio(Conexion)
 
+            ' El fondo se captura en un diálogo al iniciar; el campo solo lo muestra
+            TxtFondoApertura.ReadOnly = True
+
             EstilizarGrid(TdbGridCordobas)
             EstilizarGrid(TdbGridDolares)
             EstilizarGrid(TdbGridChequeCordobas)
@@ -55,6 +59,9 @@ Public Class FrmArqueo
             CboCajero.DisplayMember = "Nombres"
             CboCajero.ValueMember = "Cod_Cajero"
             CboCajero.DataSource = _servicio.ObtenerCajeros()
+
+            ' Cajero del vendedor que inició sesión (Vendedores.CodCajero); si no tiene, el primero
+            _cajeroPredeterminado = _servicio.ObtenerCodCajeroDeVendedor(Form1.CodVendedor)
 
             NuevoArqueo()
         Catch ex As Exception
@@ -67,19 +74,17 @@ Public Class FrmArqueo
     '=================================================================================================
 
     Private Sub BtnIniciar_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BtnIniciar.Click
-        Dim fondo As Decimal
-        If Not LeerMonto(TxtFondoApertura.Text, fondo) Then
-            Aviso("El fondo de apertura no es un número válido.")
-            TxtFondoApertura.Focus()
-            Return
-        End If
-
         Dim codCajero As String = Convert.ToString(CboCajero.SelectedValue)
         If String.IsNullOrWhiteSpace(codCajero) Then
             Aviso("Seleccione un cajero.")
             CboCajero.Focus()
             Return
         End If
+
+        ' Al iniciar el arqueo se pide el fondo con que abrió la caja
+        Dim fondo As Decimal
+        If Not SolicitarFondoApertura(fondo) Then Return
+        TxtFondoApertura.Text = fondo.ToString("N2")
 
         Try
             Cursor = Cursors.WaitCursor
@@ -163,12 +168,62 @@ Public Class FrmArqueo
         Close()
     End Sub
 
-    Private Sub TxtFondoApertura_Leave(ByVal sender As Object, ByVal e As EventArgs) Handles TxtFondoApertura.Leave
-        Dim fondo As Decimal
-        If LeerMonto(TxtFondoApertura.Text, fondo) Then
-            TxtFondoApertura.Text = fondo.ToString("N2")
-        End If
-    End Sub
+    ''' <summary>Diálogo que pide el fondo de apertura de caja. Devuelve False si el usuario cancela.</summary>
+    Private Function SolicitarFondoApertura(ByRef fondo As Decimal) As Boolean
+        Dim valorInicial As Decimal
+        LeerMonto(TxtFondoApertura.Text, valorInicial)
+
+        Using dlg As New Form()
+            dlg.Text = Titulo
+            dlg.FormBorderStyle = FormBorderStyle.FixedDialog
+            dlg.StartPosition = FormStartPosition.CenterParent
+            dlg.MinimizeBox = False
+            dlg.MaximizeBox = False
+            dlg.ShowInTaskbar = False
+            dlg.ClientSize = New Size(340, 150)
+
+            Dim lbl As New Label()
+            lbl.Text = "Fondo de apertura de caja"
+            lbl.Font = New Font("Segoe UI Semibold", 11.0!, FontStyle.Bold)
+            lbl.ForeColor = _colorTexto
+            lbl.AutoSize = True
+            lbl.Location = New Point(20, 18)
+
+            Dim txt As New TextBox()
+            txt.Font = New Font("Segoe UI", 14.0!)
+            txt.TextAlign = HorizontalAlignment.Right
+            txt.Text = valorInicial.ToString("N2")
+            txt.Location = New Point(20, 52)
+            txt.Size = New Size(300, 32)
+
+            Dim btnAceptar As New Button()
+            btnAceptar.Text = "Aceptar"
+            btnAceptar.Location = New Point(130, 100)
+            btnAceptar.Size = New Size(90, 32)
+            btnAceptar.DialogResult = DialogResult.OK
+
+            Dim btnCancelar As New Button()
+            btnCancelar.Text = "Cancelar"
+            btnCancelar.Location = New Point(230, 100)
+            btnCancelar.Size = New Size(90, 32)
+            btnCancelar.DialogResult = DialogResult.Cancel
+
+            dlg.Controls.AddRange(New Control() {lbl, txt, btnAceptar, btnCancelar})
+            dlg.AcceptButton = btnAceptar
+            dlg.CancelButton = btnCancelar
+            AddHandler dlg.Shown, Sub(s As Object, ev As EventArgs) txt.SelectAll()
+
+            Do
+                If dlg.ShowDialog(Me) <> DialogResult.OK Then Return False
+
+                If LeerMonto(txt.Text, fondo) Then Return True
+
+                Aviso("El fondo de apertura no es un número válido.")
+                txt.Focus()
+                txt.SelectAll()
+            Loop
+        End Using
+    End Function
 
     ''' <summary>Al digitar la cantidad de una denominación se recalcula el monto del renglón y los totales.</summary>
     Private Sub GridEfectivo_AfterColUpdate(ByVal sender As Object, ByVal e As C1.Win.C1TrueDBGrid.ColEventArgs) _
@@ -255,7 +310,7 @@ Public Class FrmArqueo
             TxtNumeroArqueo.Text = SinNumero
             LblNumeroArqueo.Text = "Arqueo Nº —"
             DTFecha.Value = Date.Today
-            If CboCajero.Items.Count > 0 Then CboCajero.SelectedIndex = 0
+            SeleccionarCajeroPredeterminado()
             TxtFondoApertura.Text = "0.00"
             TxtObservaciones.Clear()
             TxtPracticadoPor.Clear()
@@ -266,7 +321,22 @@ Public Class FrmArqueo
 
         AplicarEstado()
         LblEstado.ForeColor = _colorTexto
-        LblEstado.Text = "Seleccione cajero y fecha para iniciar el arqueo"
+        LblEstado.Text = "Seleccione cajero y fecha y presione Iniciar; se le pedirá el fondo de apertura"
+    End Sub
+
+    Private Sub SeleccionarCajeroPredeterminado()
+        If CboCajero.Items.Count = 0 Then Return
+
+        CboCajero.SelectedIndex = 0
+        If _cajeroPredeterminado <> String.Empty Then
+            For i As Integer = 0 To CboCajero.Items.Count - 1
+                Dim fila As DataRowView = TryCast(CboCajero.Items(i), DataRowView)
+                If fila IsNot Nothing AndAlso String.Equals(Convert.ToString(fila("Cod_Cajero")).Trim(), _cajeroPredeterminado, StringComparison.OrdinalIgnoreCase) Then
+                    CboCajero.SelectedIndex = i
+                    Exit For
+                End If
+            Next
+        End If
     End Sub
 
     Private Sub CargarArqueo(ByVal cab As ArqueoCabecera)
@@ -317,6 +387,7 @@ Public Class FrmArqueo
         TxtSubTotalDolares.Text = resumen.EfectivoContadoDolares.ToString("N2")
         TxtTotalChequeCordobas.Text = resumen.ChequesCordobas.ToString("N2")
         TxtTotalChequeDolares.Text = resumen.ChequesDolares.ToString("N2")
+        TxtFondoResumen.Text = resumen.FondoApertura.ToString("N2")
         TxtSumaFacturaCordobas.Text = resumen.EfectivoEsperadoCordobas.ToString("N2")
         TxtSumaFacturaDolares.Text = resumen.EfectivoEsperadoDolares.ToString("N2")
         TxtTasaCambio.Text = resumen.TasaCambio.ToString("N4")
@@ -355,7 +426,6 @@ Public Class FrmArqueo
 
         CboCajero.Enabled = Not hayArqueo
         DTFecha.Enabled = Not hayArqueo
-        TxtFondoApertura.Enabled = Not hayArqueo
         BtnIniciar.Enabled = Not hayArqueo
 
         TxtObservaciones.ReadOnly = Not editable

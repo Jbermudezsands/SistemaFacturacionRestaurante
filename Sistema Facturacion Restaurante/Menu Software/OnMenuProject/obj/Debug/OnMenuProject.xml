@@ -50,8 +50,26 @@ OnMenuProject
 <member name="M:OnMenuProject.Form1.MoverFilaCuenta(System.Int32)">
  <summary>Mueve la fila actual del grid de productos y la deja visible y resaltada.</summary>
 </member>
+<member name="M:OnMenuProject.Form1.CuentaCerradaPorCajero">
+ <summary>
+ Devuelve True si la cuenta cargada ya fue cerrada (o cancelada) por otro usuario. En ese caso avisa al mesero,
+ limpia la pantalla y lo envía a FormCuentas, igual que el botón "Mis cuentas". Una cuenta aún no grabada no cuenta como cerrada.
+ </summary>
+</member>
 <member name="M:OnMenuProject.Form1.EstilizarColumnasCuenta">
  <summary>Titulos y alineacion de las columnas; se aplica cada vez que se vuelve a enlazar el grid (BackToLife).</summary>
+</member>
+<member name="M:OnMenuProject.FormCuentas.ReabrirMesaSeleccionada">
+ <summary>Vuelve a mostrar las cuentas de la mesa elegida; si ya no es del mesero se limpia la lista.</summary>
+</member>
+<member name="M:OnMenuProject.FormCuentas.LeerFirmaCuentas">
+ <summary>Huella de las cuentas abiertas: cambia cuando se abre, se cierra o cambia de mesero alguna cuenta.</summary>
+</member>
+<member name="T:OnMenuProject.FrmDatosCliente">
+ <summary>
+ Datos del cliente de una cuenta (nombre, RUC, teléfono y dirección), como los captura Form1 para el mesero.
+ El cajero los usa desde frmCuentasCajero para que salgan en la factura impresa.
+ </summary>
 </member>
 <member name="M:OnMenuProject.FormLog.InicializarConexiones">
  <summary>Lee la cadena de conexión desde el Access local y crea las conexiones globales.</summary>
@@ -131,6 +149,9 @@ OnMenuProject
 <member name="T:OnMenuProject.ArqueoRepositorio">
  <summary>Acceso a datos del arqueo de caja. Todas las consultas son parametrizadas.</summary>
 </member>
+<member name="M:OnMenuProject.ArqueoRepositorio.ObtenerCodCajeroDeVendedor(System.String)">
+ <summary>Cajero asignado al vendedor (Vendedores.CodCajero); cadena vacía si no tiene.</summary>
+</member>
 <member name="M:OnMenuProject.ArqueoRepositorio.ObtenerTasaCambio(System.DateTime)">
  <summary>Tasa de cambio oficial de la fecha; 0 si no está registrada.</summary>
 </member>
@@ -195,6 +216,9 @@ OnMenuProject
  están en ArqueoServicio, ArqueoCalculadora y ArqueoRepositorio (carpeta Clases\Arqueo).
  </summary>
 </member>
+<member name="M:OnMenuProject.FrmArqueo.SolicitarFondoApertura(System.Decimal@)">
+ <summary>Diálogo que pide el fondo de apertura de caja. Devuelve False si el usuario cancela.</summary>
+</member>
 <member name="M:OnMenuProject.FrmArqueo.GridEfectivo_AfterColUpdate(System.Object,C1.Win.C1TrueDBGrid.ColEventArgs)">
  <summary>Al digitar la cantidad de una denominación se recalcula el monto del renglón y los totales.</summary>
 </member>
@@ -221,6 +245,9 @@ OnMenuProject
 </member>
 <member name="M:OnMenuProject.frmCuentasCajero.CargarCuentasAbiertas">
  <summary>Cuentas en curso de todo el restaurante (las mismas que ocupan las mesas en FormCuentas).</summary>
+</member>
+<member name="M:OnMenuProject.frmCuentasCajero.FirmaDe(System.Data.DataTable)">
+ <summary>Huella de las cuentas abiertas: cambia cuando se abre, se cierra o se modifica alguna.</summary>
 </member>
 <member name="M:OnMenuProject.frmCuentasCajero.CambioPropinaIva(System.Object,System.EventArgs)">
  <summary>Quita o pone propina e IVA y regraba los totales de la cuenta, con las mismas reglas de Form1.Calcular.</summary>

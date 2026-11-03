@@ -63,6 +63,8 @@ Partial Public Class ArepArqueoCaja
         Me.Label20 = New DataDynamics.ActiveReports.Label
         Me.LblDiferencia = New DataDynamics.ActiveReports.Label
         Me.Label17 = New DataDynamics.ActiveReports.Label
+        Me.LblFondoApertura = New DataDynamics.ActiveReports.Label
+        Me.TxtFondoApertura = New DataDynamics.ActiveReports.Label
         Me.LblObservaciones = New DataDynamics.ActiveReports.Label
         Me.LblFirma = New DataDynamics.ActiveReports.Label
         Me.LblArqueadoPor = New DataDynamics.ActiveReports.Label
@@ -617,7 +619,7 @@ Partial Public Class ArepArqueoCaja
         '
         'PageFooter1
         '
-        Me.PageFooter1.Controls.AddRange(New DataDynamics.ActiveReports.ARControl() {Me.Label16, Me.LbltotalCordobasDolares, Me.Label18, Me.LblMontoRecibidos, Me.Label20, Me.LblDiferencia, Me.Label17, Me.LblObservaciones, Me.LblFirma, Me.LblArqueadoPor})
+        Me.PageFooter1.Controls.AddRange(New DataDynamics.ActiveReports.ARControl() {Me.LblFondoApertura, Me.TxtFondoApertura, Me.Label16, Me.LbltotalCordobasDolares, Me.Label18, Me.LblMontoRecibidos, Me.Label20, Me.LblDiferencia, Me.Label17, Me.LblObservaciones, Me.LblFirma, Me.LblArqueadoPor})
         Me.PageFooter1.Height = 1.3125!
         Me.PageFooter1.Name = "PageFooter1"
         '
@@ -775,6 +777,44 @@ Partial Public Class ArepArqueoCaja
         Me.LblTotalChequeDolares.Top = 1.1875!
         Me.LblTotalChequeDolares.Width = 0.6875!
         '
+        'LblFondoApertura
+        '
+        Me.LblFondoApertura.Border.BottomColor = System.Drawing.Color.Black
+        Me.LblFondoApertura.Border.BottomStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblFondoApertura.Border.LeftColor = System.Drawing.Color.Black
+        Me.LblFondoApertura.Border.LeftStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblFondoApertura.Border.RightColor = System.Drawing.Color.Black
+        Me.LblFondoApertura.Border.RightStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblFondoApertura.Border.TopColor = System.Drawing.Color.Black
+        Me.LblFondoApertura.Border.TopStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblFondoApertura.Height = 0.1875!
+        Me.LblFondoApertura.HyperLink = Nothing
+        Me.LblFondoApertura.Left = 4.1875!
+        Me.LblFondoApertura.Name = "LblFondoApertura"
+        Me.LblFondoApertura.Style = "ddo-char-set: 0; font-size: 8.25pt; "
+        Me.LblFondoApertura.Text = "Fondo Apertura"
+        Me.LblFondoApertura.Top = 0.0!
+        Me.LblFondoApertura.Width = 1.5!
+        '
+        'TxtFondoApertura
+        '
+        Me.TxtFondoApertura.Border.BottomColor = System.Drawing.Color.Black
+        Me.TxtFondoApertura.Border.BottomStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.TxtFondoApertura.Border.LeftColor = System.Drawing.Color.Black
+        Me.TxtFondoApertura.Border.LeftStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.TxtFondoApertura.Border.RightColor = System.Drawing.Color.Black
+        Me.TxtFondoApertura.Border.RightStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.TxtFondoApertura.Border.TopColor = System.Drawing.Color.Black
+        Me.TxtFondoApertura.Border.TopStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.TxtFondoApertura.Height = 0.1875!
+        Me.TxtFondoApertura.HyperLink = Nothing
+        Me.TxtFondoApertura.Left = 5.6875!
+        Me.TxtFondoApertura.Name = "TxtFondoApertura"
+        Me.TxtFondoApertura.Style = "ddo-char-set: 0; text-align: right; font-weight: bold; font-size: 8.25pt; "
+        Me.TxtFondoApertura.Text = ""
+        Me.TxtFondoApertura.Top = 0.0!
+        Me.TxtFondoApertura.Width = 0.9375!
+        '
         'Label16
         '
         Me.Label16.Border.BottomColor = System.Drawing.Color.Black
@@ -791,7 +831,7 @@ Partial Public Class ArepArqueoCaja
         Me.Label16.Name = "Label16"
         Me.Label16.Style = "ddo-char-set: 0; font-size: 8.25pt; "
         Me.Label16.Text = "Total Cordobas mas Dolares"
-        Me.Label16.Top = 0.0!
+        Me.Label16.Top = 0.1875!
         Me.Label16.Width = 1.5!
         '
         'LbltotalCordobasDolares
@@ -810,7 +850,7 @@ Partial Public Class ArepArqueoCaja
         Me.LbltotalCordobasDolares.Name = "LbltotalCordobasDolares"
         Me.LbltotalCordobasDolares.Style = "ddo-char-set: 0; text-align: right; font-weight: bold; font-size: 8.25pt; "
         Me.LbltotalCordobasDolares.Text = ""
-        Me.LbltotalCordobasDolares.Top = 0.0!
+        Me.LbltotalCordobasDolares.Top = 0.1875!
         Me.LbltotalCordobasDolares.Width = 0.9375!
         '
         'Label18
@@ -829,7 +869,7 @@ Partial Public Class ArepArqueoCaja
         Me.Label18.Name = "Label18"
         Me.Label18.Style = "ddo-char-set: 0; font-size: 8.25pt; "
         Me.Label18.Text = "Montos Recibidos"
-        Me.Label18.Top = 0.1875!
+        Me.Label18.Top = 0.375!
         Me.Label18.Width = 1.5!
         '
         'LblMontoRecibidos
@@ -848,7 +888,7 @@ Partial Public Class ArepArqueoCaja
         Me.LblMontoRecibidos.Name = "LblMontoRecibidos"
         Me.LblMontoRecibidos.Style = "ddo-char-set: 0; text-align: right; font-weight: bold; font-size: 8.25pt; "
         Me.LblMontoRecibidos.Text = ""
-        Me.LblMontoRecibidos.Top = 0.1875!
+        Me.LblMontoRecibidos.Top = 0.375!
         Me.LblMontoRecibidos.Width = 0.9375!
         '
         'Label20
@@ -867,7 +907,7 @@ Partial Public Class ArepArqueoCaja
         Me.Label20.Name = "Label20"
         Me.Label20.Style = "ddo-char-set: 0; font-size: 8.25pt; "
         Me.Label20.Text = "Diferencia"
-        Me.Label20.Top = 0.375!
+        Me.Label20.Top = 0.5625!
         Me.Label20.Width = 1.5!
         '
         'LblDiferencia
@@ -886,7 +926,7 @@ Partial Public Class ArepArqueoCaja
         Me.LblDiferencia.Name = "LblDiferencia"
         Me.LblDiferencia.Style = "ddo-char-set: 0; text-align: right; font-weight: bold; font-size: 8.25pt; "
         Me.LblDiferencia.Text = ""
-        Me.LblDiferencia.Top = 0.375!
+        Me.LblDiferencia.Top = 0.5625!
         Me.LblDiferencia.Width = 0.9375!
         '
         'Label17
@@ -1072,6 +1112,8 @@ Partial Public Class ArepArqueoCaja
     Friend WithEvents Label20 As DataDynamics.ActiveReports.Label
     Friend WithEvents LblDiferencia As DataDynamics.ActiveReports.Label
     Friend WithEvents Label17 As DataDynamics.ActiveReports.Label
+    Friend WithEvents LblFondoApertura As DataDynamics.ActiveReports.Label
+    Friend WithEvents TxtFondoApertura As DataDynamics.ActiveReports.Label
     Friend WithEvents LblObservaciones As DataDynamics.ActiveReports.Label
     Friend WithEvents LblFirma As DataDynamics.ActiveReports.Label
     Friend WithEvents LblArqueadoPor As DataDynamics.ActiveReports.Label

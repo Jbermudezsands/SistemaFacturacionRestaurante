@@ -49,6 +49,19 @@ Public Class ArqueoRepositorio
         Return tabla
     End Function
 
+    ''' <summary>Cajero asignado al vendedor (Vendedores.CodCajero); cadena vacía si no tiene.</summary>
+    Public Function ObtenerCodCajeroDeVendedor(ByVal codVendedor As String) As String
+        Using cn As New SqlConnection(_conexion)
+            Using cmd As New SqlCommand("SELECT CodCajero FROM Vendedores WHERE Cod_Vendedor = @CodVendedor", cn)
+                cmd.Parameters.Add("@CodVendedor", SqlDbType.VarChar).Value = If(codVendedor, String.Empty)
+                cn.Open()
+                Dim valor As Object = cmd.ExecuteScalar()
+                If valor Is Nothing OrElse IsDBNull(valor) Then Return String.Empty
+                Return Convert.ToString(valor).Trim()
+            End Using
+        End Using
+    End Function
+
     Public Function ObtenerDenominaciones() As DataTable
         Dim tabla As New DataTable("Denominacion")
         Using cn As New SqlConnection(_conexion)

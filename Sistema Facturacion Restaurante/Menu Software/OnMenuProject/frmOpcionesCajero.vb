@@ -50,6 +50,16 @@ Public Class frmOpcionesCajero
     End Sub
 
     Private Sub BtnArqueo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnArqueo.Click
+        Try
+            If New ArqueoServicio(Conexion).ObtenerCajeros().Rows.Count = 0 Then
+                MessageBox.Show("No hay cajeros creados, por lo que no se puede ingresar a los arqueos." & vbCrLf & "Cree un cajero e inténtelo de nuevo.", "Zeus Facturación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+        Catch ex As Exception
+            MessageBox.Show("No se pudo verificar los cajeros." & vbCrLf & ex.Message, "Zeus Facturación", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End Try
+
         Using Pantalla As New FrmArqueo
             Pantalla.ShowDialog(Me)
         End Using

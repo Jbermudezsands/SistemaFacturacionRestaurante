@@ -284,6 +284,7 @@ Public Class Form1
 
 
     Public Sub ClickFPP(ByVal Sender As Object, ByVal e As EventArgs)
+        If CuentaCerradaPorCajero() Then Exit Sub
 
         If Me.cboMesas.Text = "" Then
             MessageBox.Show("Tenes que seleccionar una mesa", "Zeus Facturacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -351,6 +352,7 @@ Public Class Form1
 
 
     Private Sub btnDisminuir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDisminuir.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
 
 
         If Me.C1TrueDBGrid1.RowCount > 0 Then
@@ -374,6 +376,7 @@ Public Class Form1
     End Sub
 
     Private Sub btnAgregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregar.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
 
         If Me.C1TrueDBGrid1.RowCount > 0 Then
             Dim foundRows() As Data.DataRow = DS.Tables(0).Select("Cod_Producto = '" & Me.C1TrueDBGrid1.Columns("Cod_Producto").Text & "'")
@@ -390,6 +393,7 @@ Public Class Form1
 
 
     Private Sub btnEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEliminar.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
 
         If Me.C1TrueDBGrid1.RowCount > 0 Then
             Dim foundRows() As Data.DataRow = DS.Tables(0).Select("Cod_Producto = '" & Me.C1TrueDBGrid1.Columns("Cod_Producto").Text & "'")
@@ -506,6 +510,7 @@ Public Class Form1
     End Sub
 
     Private Sub Guardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btGuardar.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
         Dim Impresora_Defecto As String
         Dim ImprimeFacturaPreview As Boolean = ObtenerImprimirSinPreview()
 
@@ -1024,6 +1029,7 @@ Public Class Form1
 
 
     Private Sub C1Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles C1Button4.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
         Dim MontoPagado As Double, Resultado As Double
         Dim Impresora_Defecto As String
         Dim ImprimeFacturaPreview As Boolean = ObtenerImprimirSinPreview()
@@ -1221,6 +1227,7 @@ Public Class Form1
         FechaFactura = Nothing
     End Sub
     Private Sub C1Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles C1Button2.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
         If Me.C1TrueDBGrid1.RowCount > 0 Then
             Dim foundRows() As Data.DataRow = DS.Tables(0).Select("Cod_Producto = '" & Me.C1TrueDBGrid1.Columns("Cod_Producto").Text & "'")
             If foundRows.Length > 0 Then
@@ -1284,6 +1291,7 @@ Public Class Form1
 
 
     Private Sub BtnPago_Click(sender As Object, e As EventArgs) Handles BtnPago.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
 
         If Me.cboMesas.Text = "" Then
             MessageBox.Show("Tenès que seleccionar una mesa", "Zeus Facturaciòn", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -1340,6 +1348,7 @@ Public Class Form1
     End Sub
 
     Private Sub BtnPreFactura_Click(sender As Object, e As EventArgs) Handles BtnPreFactura.Click
+        If CuentaCerradaPorCajero() Then Exit Sub
 
         Dim Impresora_Defecto As String
         Dim ImprimeFacturaPreview As Boolean = ObtenerImprimirSinPreview()
