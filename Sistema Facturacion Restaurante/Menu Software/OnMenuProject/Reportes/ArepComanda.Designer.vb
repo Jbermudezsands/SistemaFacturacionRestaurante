@@ -14,13 +14,17 @@ Partial Public Class ArepComanda
     'Do not modify it using the code editor.
     Private WithEvents PageHeader1 As DataDynamics.ActiveReports.PageHeader
     Private WithEvents Detail1 As DataDynamics.ActiveReports.Detail
+    Private WithEvents ReportHeader1 As DataDynamics.ActiveReports.ReportHeader
     Private WithEvents PageFooter1 As DataDynamics.ActiveReports.PageFooter
+    Private WithEvents ReportFooter1 As DataDynamics.ActiveReports.ReportFooter
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(ArepComanda))
+        Me.ReportHeader1 = New DataDynamics.ActiveReports.ReportHeader
         Me.PageHeader1 = New DataDynamics.ActiveReports.PageHeader
         Me.Detail1 = New DataDynamics.ActiveReports.Detail
         Me.PageFooter1 = New DataDynamics.ActiveReports.PageFooter
+        Me.ReportFooter1 = New DataDynamics.ActiveReports.ReportFooter
         Me.Label6 = New DataDynamics.ActiveReports.Label
         Me.LblTipoCompra = New DataDynamics.ActiveReports.Label
         Me.lblfactura = New DataDynamics.ActiveReports.Label
@@ -68,11 +72,21 @@ Partial Public Class ArepComanda
         Me.Detail1.Height = 0.1979167!
         Me.Detail1.Name = "Detail1"
         '
+        'ReportHeader1
+        '
+        Me.ReportHeader1.Height = 0!
+        Me.ReportHeader1.Name = "ReportHeader1"
+        '
         'PageFooter1
         '
-        Me.PageFooter1.Controls.AddRange(New DataDynamics.ActiveReports.ARControl() {Me.LblImpresion})
-        Me.PageFooter1.Height = 0.25!
+        Me.PageFooter1.Height = 0!
         Me.PageFooter1.Name = "PageFooter1"
+        '
+        'ReportFooter1
+        '
+        Me.ReportFooter1.Controls.AddRange(New DataDynamics.ActiveReports.ARControl() {Me.LblImpresion})
+        Me.ReportFooter1.Height = 0.25!
+        Me.ReportFooter1.Name = "ReportFooter1"
         '
         'LblImpresion
         '
@@ -82,6 +96,16 @@ Partial Public Class ArepComanda
         Me.LblImpresion.Border.LeftStyle = DataDynamics.ActiveReports.BorderLineStyle.None
          Me.LblImpresion.Border.RightColor = System.Drawing.Color.Black
         Me.LblImpresion.Border.RightStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblImpresion.Border.TopColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.TopStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblImpresion.Height = 0.1875!
+        Me.LblImpresion.HyperLink = Nothing
+        Me.LblImpresion.Left = 0!
+        Me.LblImpresion.Name = "LblImpresion"
+        Me.LblImpresion.Style = "ddo-char-set: 0; text-align: center; font-weight: normal; font-size: 8.25pt; font-family: Microsoft Sans Serif; "
+        Me.LblImpresion.Text = "Impreso:"
+        Me.LblImpresion.Top = 0!
+        Me.LblImpresion.Width = 2.375!
         '
         'Label6
         '
@@ -385,9 +409,11 @@ Partial Public Class ArepComanda
         Me.PageSettings.PaperHeight = 11.0!
         Me.PageSettings.PaperWidth = 8.5!
         Me.PrintWidth = 2.46875!
+        Me.Sections.Add(Me.ReportHeader1)
         Me.Sections.Add(Me.PageHeader1)
         Me.Sections.Add(Me.Detail1)
         Me.Sections.Add(Me.PageFooter1)
+        Me.Sections.Add(Me.ReportFooter1)
         Me.StyleSheet.Add(New DDCssLib.StyleSheetRule("font-family: Arial; font-style: normal; text-decoration: none; font-weight: norma" & _
                     "l; font-size: 10pt; color: Black; ", "Normal"))
         Me.StyleSheet.Add(New DDCssLib.StyleSheetRule("font-size: 16pt; font-weight: bold; ", "Heading1", "Normal"))

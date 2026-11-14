@@ -968,6 +968,16 @@ Partial Public Class ArepFacturasTiras2
         Me.LblImpresion.Border.LeftStyle = DataDynamics.ActiveReports.BorderLineStyle.None
          Me.LblImpresion.Border.RightColor = System.Drawing.Color.Black
         Me.LblImpresion.Border.RightStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblImpresion.Border.TopColor = System.Drawing.Color.Black
+        Me.LblImpresion.Border.TopStyle = DataDynamics.ActiveReports.BorderLineStyle.None
+        Me.LblImpresion.Height = 0.1875!
+        Me.LblImpresion.HyperLink = Nothing
+        Me.LblImpresion.Left = 0!
+        Me.LblImpresion.Name = "LblImpresion"
+        Me.LblImpresion.Style = "ddo-char-set: 0; text-align: center; font-weight: normal; font-size: 8.25pt; font-family: Microsoft Sans Serif; "
+        Me.LblImpresion.Text = "Impreso:"
+        Me.LblImpresion.Top = 2.1875!
+        Me.LblImpresion.Width = 2.375!
         '
         'Label8
         '
